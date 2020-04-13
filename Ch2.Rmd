@@ -1,0 +1,141 @@
+---
+title: "Chapter 2 - Describing Distributions with Numbers"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## 2.2 Measuring Center
+
+The **median** is the middle value of the sorted list, or, if the list has an even number of members, it is the average of the two middle values.
+
+```{r}
+median(c(2, 4, 6, 8, 10))
+median(c(2, 4, 6, 8))
+```
+
+The **sample mean** is the average...
+$$\bar{x} = \frac1n(x_1 + x_2 + \cdots + x_n) = \frac1n\sum_{i=1}^nx_i$$
+
+If each value $x$ occurs $n(x)$ times, then $p(x) = \frac{n(x)}{n}$, then...
+$$ \bar{x} = \frac1n \sum_xxn(x) = \sum_xxp(x)$$
+
+The weighted mean is as follows, or in R `weighted.mean(x,w)`...
+$$ \frac{\sum_{i=1}^n x_iw_i}{\sum_{i=1}^n w_i}$$
+
+*Exercise 2.3* Give a formula for $\bar{x}_{n+1}$ in terms of $\bar{x}$.  Hmm.
+
+$$ \bar{x}_{n+1} = \frac{1}{n+1}(n\bar{x} + x_{n+1}) =  \frac{1}{n+1}\left[n\left(\frac1n\sum_{i=1}^nx_i\right) + x_{n+1}\right] = \frac{1}{n+1}\left[\left(\sum_{i=1}^nx_i\right) + x_{n+1}\right] \large{?} $$
+
+## 2.2. Measuring Spread
+
+```{r}
+age <- c(57, 61, 57, 57, 58, 57, 61, 54, 68, 51, 49, 64, 50, 48, 65, 52, 56, 46, 54, 49, 51, 47, 55, 55, 54, 42, 51, 56, 55, 51, 54, 51, 60, 61, 43, 55, 56, 61, 52, 69, 64, 46, 54, 47, 70)
+boxplot(age, main = "Age of Presidents at Inauguration")
+```
+
+The **sample variance**, the average of the square of differences from the mean.
+$$ \text{var}(x) = s_x^2 = \frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2$$
+
+The **standard deviation** just equals $s_x$.
+
+```{r}
+bacteria<-c(rep(1.5,18),rep(2.0,71),rep(2.5,48),rep(3,37),rep(3.5,16),rep(4,6), + rep(4.5,4)) 
+length(bacteria)
+mean(bacteria)
+var(bacteria)
+sd(bacteria)
+```
+
+*Exercise 2.8* Show that $\sum_{i=1}^n(x_i - \bar{x}) = 0$.  Hmm.
+$$\sum_{i=1}^n(x_i - \bar{x}) = \sum_{i=1}^nx_i - n\bar{x} = \sum_{i=1}^nx_i - n\left(\frac1n\sum_{i=1}^nx_i\right) = \sum_{i=1}^nx_i - \sum_{i=1}^nx_i = 0 \, \large? $$
+
+*Exercise 2.11* Give summary statistics for $y$ where $y_i = a + bx_i$.  Hmm, for the mean...
+$$
+\begin{align*}
+\bar{y} & = \frac1n\sum_{i=1}^ny_i \\
+& = \frac1n\sum_{i=1}^n(a + bx_i) \\
+& = \frac1n\left(\sum_{i=1}^na\right) + \frac1n\left(\sum_{i=1}^nbx_i\right) \\
+& = a + b\left(\frac1n\sum_{i=1}^nx_i\right) \\
+\bar{y} & = a + b\bar{x} \, \large?
+\end{align*}
+$$
+
+For the variance (with help from the answer in the text)...
+$$
+\begin{align*}
+s_y^2 &= \frac{1}{n-1}\sum_{i=1}^n(y_i - \bar{y})^2 \\
+&= \frac{1}{n-1}\sum_{i=1}^n\left[(a+bx_i) - (a+b\bar{x})\right]^2 \\
+&= \frac{1}{n-1}\sum_{i=1}^n(bx_i - b\bar{x})^2 \\
+&= \frac{1}{n-1}\sum_{i=1}^n\left[b(x_i - \bar{x})\right]^2 \\
+&= \frac{1}{n-1}\sum_{i=1}^nb^2(x_i - \bar{x})^2 \\
+&= b^2\left(\frac{1}{n-1}\sum_{i=1}^n(x_i - \bar{x})^2\right) \\
+s_y^2 &= b^2 s_x^2
+\, \large?
+\end{align*}
+$$
+(*note: text shows **quadratic identity** as $\text{var}(x+bx) = b^2\text{var}(x)$, should it be $\text{var}(a+bx) = b^2\text{var}(x)$?)
+
+## 2.3 Quantiles and Standardized Variables
+The empirical cumulative distribution function tells you what **quantile** a particular value lies at in the distribution.
+$$ F_n(x) = \frac{1}{n} \#\text{(observations <= x)} $$
+
+The 80% percentile among presidential inauguration ages is...
+```{r}
+quantile(age, .8)
+```
+
+Getting the percentile of age 57 uses the fact that the empirical cumulative distribution function `ecdf()` itself returns a function.
+```{r}
+ecdf(age)(57)
+```
+
+
+The **z-score** shows where in a distribution a value lies with respect to the mean and standard deviation.  The z-score is also called the standardized version, the standard score, the z-value, and the normal score.
+$$ z_i = \frac{x_i - \bar{x}}{s_x} $$
+
+```{r}
+data.frame(sort(age), scale(sort(age)))
+```
+
+## 2.4 Quantile-Quantile Plots
+
+```{r}
+missense<-c(1,rep(2,6),rep(3,15),rep(4,20),rep(5,21),rep(6,21),rep(7,9),rep(8,8), rep(9,5),rep(10,7),11,11,11,12,12,13,15)
+nonsense<-c(0,1,rep(2,7),rep(3,18),rep(4,30),rep(5,27),rep(6,24),rep(7,16), rep(8,11),rep(9,3),10,10,12,12,13,15)
+summary(missense)
+summary(nonsense) 
+```
+
+```{r}
+par(mfrow=c(1,3))
+boxplot(missense,nonsense,names=c("missense","nonsense"))
+plot(sort(missense),
+     1:length(missense)/length(missense),
+     type="s", 
+     xlab=c("age in months"),
+     ylab=c("fraction below"),
+     xlim=c(0,15), 
+     ylim=c(0,1),
+     col="red")
+par(new=TRUE)
+plot(sort(nonsense),
+     1:length(nonsense)/length(nonsense),
+     type="s", 
+     xlab=c(""),
+     ylab=c(""),
+     xlim=c(0,15),
+     ylim=c(0,1),
+     col="blue")
+legend("topleft",c("missense","nonsense"),fill=c("red","blue"))
+qqplot(missense,nonsense,xlim=c(0,15),ylim=c(0,15))
+abline(a=0,b=1)
+q<-c(0.25,0.50,0.75)
+points(quantile(missense,q),quantile(nonsense,q),col="blue",pch=19) 
+
+```
+

@@ -1,0 +1,35 @@
+---
+title: "Ch2-DescriptiveStatistics"
+output: html_document
+---
+
+```{r setup, include=F}
+knitr::opts_chunk$set(comment=NA)
+```
+
+## Make up some data
+
+Make data.
+```{r}
+v <- rnorm(30, mean = 50, sd = 10)
+v
+```
+Round them.
+```{r}
+v <- round(v, 0)
+v
+```
+What do they look like sorted?
+```{r}
+sort(v)
+```
+
+Try a stem-and-leaf plot
+```{r comment=NA}
+stem(v)
+```
+What about a histogram.
+```{r}
+hist(v)
+```
+

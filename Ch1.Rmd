@@ -1,0 +1,167 @@
+---
+title: "Chapter 1 - Displaying Data"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+*With additional material from OpenSTAX [Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## Types of Data
+
+* Qualitative (Categorical) data, aka levels or factors
+* Quantitative (Numerical) data
+  * Discrete (counting)
+  * Continuous
+
+### Levels of Measurement
+
+**Nominal scale** - Unordered categorical data.  Example, favorite foods.  Sushi is not inherently less than or greater than pizza.
+
+**Ordinal scale** - Ordered categorical data, but difference between values cannot be measured.  Example, "strongly agree", "agree", "disagree", "strongly disagree".  (Qualitative/categorical?)
+
+**Interval scale** - Ordered quantitative data where differences can be measured, but ratios cannot be taken because there is no true 0 point.  Example, Fahrenheit scale, where the difference between 60 and 80 is 20, but where 80 is not four times as hot as 20.
+
+**Ratio scale** - Ordered quantitative data where differences and ratios can both be calculated.  Example, Kelvin scale or test scores counted from 0.
+
+### Categorical Graphics
+
+Simple Pie Chart
+```{r}
+males <- c(58, 18, 16, 7, 1)
+pie(males)
+```
+
+Fancier Pie Chart (*note: backslash before % in original*)
+```{r}
+colors <- c("white", "grey70", "grey90", "grey50", "black")
+male_labels <- round(males/sum(males) * 100, 1)
+male_labels <- paste(male_labels, "%", sep=" ")
+pie(males,
+    main = "Proportion of US Male AIDS Cases by Transmission",
+    col = colors,
+    labels = male_labels,
+    cex = 0.8
+)
+legend("topright",
+       c("Male-male contact",
+         "Injection drug use (IDU)",
+         "High-risk heterosexual contact",
+         "Male-male contact and IDU",
+         "Other"),
+       cex = 0.8,
+       fill = colors
+       )
+
+```
+
+Simple bar chart
+```{r}
+barplot(males)
+```
+
+Fancier bar plot, with females included this time.
+```{r}
+females <- c(0, 71, 27, 0, 2)
+hiv <- array(c(males, females), dim=c(5,2))
+barplot(hiv,
+        main = "Proportion of US AIDS Cases by Sex and Transmission",
+        ylab = "percent",
+        beside = TRUE,
+        names.arg = c("Males", "Females"),
+        col = colors
+)
+legend("topright",
+       c("Male-male contact",
+         "Injection drug use (IDU)",
+         "High-risk heterosexual contact",
+         "Male-male contact and IDU",
+         "Other"),
+       cex = 0.8,
+       fill = colors
+)
+```
+
+Contingency tables, also known as two-way tables, cross tabulation tables, or cross classifying tables.
+
+Let's get some smoking data to work with.
+```{r}
+smoking <- matrix(c(400, 1380, 416, 1823, 188, 1168), ncol = 3)
+colnames(smoking) <- c("2 parents", "1 parent", "0 parents")
+rownames(smoking) <- c("smokes", "does not smoke")
+smoking
+```
+
+Now let's show the parts of a contingency table, transposed (I'm not sure how to show it all yet.)  With totals showing the *marginal distributions*, it should look something like this according to the book.  [I'm not sure how to add labels to the total column and rows.  Also, there might be an easier way to do this.]
+```{r}
+s <- cbind(t(smoking), rowSums(t(smoking)))
+s <- rbind(s, cbind(t(colSums(t(smoking))), sum(smoking)))
+s
+```
+
+Or, more nicely formatted, like
+```{r}
+knitr::kable(s)
+```
+
+Here is the same data as a segmented bar graph.
+```{r}
+barplot(smoking, legend = rownames(smoking))
+```
+
+### Histograms
+
+Skewness is the direction of the longer tail.
+
+Sturges' function for number of histogram bins: $\lfloor1+\log_2 n\rfloor$.
+
+President ages at inauguration
+```{r}
+age <- c(57, 61, 57, 57, 58, 57, 61, 54, 68, 51, 49, 64, 50, 48, 65, 52, 56, 46, 54, 49, 51, 47, 55, 55, 54, 42, 51, 56, 55, 51, 54, 51, 60, 61, 43, 55, 56, 61, 52, 69, 64, 46, 54, 47, 70)
+age
+ecdf(age)
+```
+
+```{r}
+par(mfrow = c(1, 2))
+hist(age)
+plot(ecdf(age), xlab = "age", main = "Age of Presidents at the Time of Inauguration", sub = "Empirical Cumulative Distribution Function")
+
+```
+
+**Empirical cumulative distribution function**:
+$$ F_n(x) = \frac{1}{n} \#\text{(observations <= x)} $$
+
+Alternate way to graph ecdf by sorting entries
+```{r}
+plot(sort(age),
+     1:length(age)/length(age),
+     type = "s",
+     xlab = "age",
+     ylab = "cumulative fraction",
+     ylim = c(0, 1)
+)
+grid()
+```
+
+*Exercise 1.14* - Fraction of presidents under 60 at inauguration.
+```{r}
+sum(age < 60, na.rm = T) / length(age)
+```
+
+**Survivor function**  (*note: text says >=, not >*)
+$$ S_n(x) = \frac{1}{n} \# \text{(observations > x)} = 1 - F_n(x) $$
+
+### Scatterplot
+
+Two-dimensional data
+```{r}
+femur <- c(38, 56, 59, 64, 74)
+humerous <- c(41, 63, 70, 72, 84)
+plot(femur, humerous, main = "Bone lengths for Archeopteryx")
+```
+

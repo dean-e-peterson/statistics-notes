@@ -1,0 +1,434 @@
+---
+title: "Chapter 3 - Correlation and Regression"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+This chapter is all concerning linear relationships.  **Correlation** focuses on association, whereas **regression** helps make predictions.
+
+## 3.1 Covariance and Correlation
+
+**Covariance** measures the linear relationship between two variables $X$ and $Y$ on the same set of $n$ individuals.
+
+$$ \text{cov}(x,y) = \frac{1}{n-1} \sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y}) $$
+Note that the covariance of x with itself is just the variance: $\text{cov}(x,x) = s_x^2$
+
+*Exercise 3.1* A negative covariance means when $x_i$ is high, $y_i$ is low, and vice versa?  A covariance near 0 means when $x_i$ is high or low, $y_i$ is a mixed bag?
+
+*Exercise 3.2* Derive the following alternative expression for the covariance [see book, I didn't succeed at this exercise]:
+$$
+\begin{align*}
+\text{cov}(x, y) &= \frac{1}{n-1} \sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y}) \\
+&= \frac{1}{n-1} \left( \sum_{i=1}^n x_iy_i-n\bar{x}\bar{y} \right)
+\end{align*}
+$$
+
+A drawback to the covariance is that it has units of measure.  To help this, the **correlation** is the covariance of the standardized versions of $x$ and $y$.
+$$ r(x,y) = \frac{1}{n-1} \sum_{i=1}^n\left(\frac{x_i-\bar{x}}{s_x}\right)\left(\frac{y_i-\bar{y}}{s_y}\right) = \frac{\text{cov}(x,y)}{s_xs_y}$$
+
+If the correlation is $0$, then $x$ and $y$ are uncorrelated.  Note also that $-1 \leq r \leq 1$.
+
+*Exercise 3.6* Show that
+$$ s_{x+y}^2 = s_x^2 + s_y^2 + 2\text{cov}(x,y) = s_x^2 + s_y^2 + 2rs_xs_y$$
+$$
+\begin{align*}
+s_{x+y}^2 &= \frac{1}{n-1} \sum_{i=1}^n\left((x+y)_i - \overline{(x+y)}\right)^2 \\
+&= \frac{1}{n-1} \sum_{i=1}^n\left((x+y)_i - \frac1n\sum_{i=1}^n(x+y)_i\right)^2 \\
+&= \frac{1}{n-1} \sum_{i=1}^n\left((x_i+y_i) - \left(\frac1n\sum_{i=1}^nx_i+\frac1n\sum_{i=1}^ny_i\right)\right)^2 \\
+&= \frac{1}{n-1} \sum_{i=1}^n\left((x_i+y_i) - \left(\bar{x}+\bar{y}\right)\right)^2 \\
+&= \frac{1}{n-1} \sum_{i=1}^n\left((x_i-\bar{x})+(y_i-\bar{y})\right)^2 \\
+&= \frac{1}{n-1} \sum_{i=1}^n\left((x_i-\bar{x})^2+2((x_i-\bar{x})(y_i-\bar{y}))+(y_i-\bar{y})^2\right) \\
+&= \frac{1}{n-1} \sum_{i=1}^n(x_i-\bar{x})^2
++2\frac{1}{n-1} \sum_{i=1}^n((x_i-\bar{x})(y_i-\bar{y}))
++\frac{1}{n-1} \sum_{i=1}^n(y_i-\bar{y})^2 \\
+&= s_x^2
++2\frac{1}{n-1} \sum_{i=1}^n((x_i-\bar{x})(y_i-\bar{y}))
++s_y^2 \\
+&= s_x^2 + s_y^2 + 2\text{cov}(x,y)
+\end{align*}
+$$
+
+Now, to try to wrap what the book shows in an R function so I can show simulations of multiple amounts of correlation $r$.
+
+```{r}
+x <- rnorm(100)
+z <- rnorm(100)
+```
+
+```{r}
+simulate_r <- function(x, z, r) {
+  y <- r*x + sqrt(1-r^2)*z
+  plot(x, y, main = r)
+}
+```
+
+```{r}
+r <- 0.7
+simulate_r(x, z, r)
+```
+
+```{r}
+rs <- c(.9, .7, .3, 0, -.5, -.8, .975, 1, -1)
+# opar <- par()
+par(mfrow = c(3,3), mar = c(1.5,1,1.5,1))
+dummy <- lapply(rs, simulate_r, x = x, z = z)
+# par(opar)
+```
+
+And archeopteryx again
+```{r}
+femur <- c(38, 56, 59, 64, 74)
+humerous <- c(41, 63, 70, 72, 84)
+cor(femur, humerous)
+plot(femur, humerous, main = "Bone lengths for Archeopteryx")
+```
+
+## 3.2 Linear Regression
+
+For prediction we call $x_i$ the **input** or **explanatory variable** and $y_i$ the **output** or **response**.
+
+In **linear regression**, the response is linearly related to the input, but subject to an error.
+$$ y_i = \alpha + \beta x_i + \epsilon_i $$
+
+In **least squares regression** we minimize the square of the vertical distances between the fit y and the actual y.  So, take the values of $\alpha$ and $\beta$ that minimize $\sum_{i=1}^n \epsilon_i^2$ and call them $\hat\alpha$ and $\hat\beta$.  The fit value of y we call $\hat y_i$.
+
+After doing some calculus, we can find the regression line:
+$$
+\hat y_i = \hat \alpha + \hat \beta x_i
+$$
+...by finding...
+$$
+\begin{align*}
+\hat \beta &= \frac{\text{cov}(x,y)}{\text{var}(x)} \\
+\hat \alpha &= \bar y - \hat \beta \bar x
+\end{align*}
+$$
+
+*Example 3.9*, but try to do the linear regression step by step using R as the calculator.
+
+```{r}
+x <- c(-2, -1,  0, 1, 2, 3)
+y <- c(-3, -1, -2, 0, 4, 2)
+xbar <- sum(x) / length(x)
+ybar <- sum(y) / length(y)
+varx <- sum((x - xbar)^2) / (length(x) - 1)
+covxy <- sum((x - xbar) * (y - ybar)) / (length(x) - 1)
+bhat <- covxy / varx
+ahat <- ybar - bhat * xbar
+c(bhat, ahat)
+```
+
+The difference between the data and the fit is an estimate of the **error** $\epsilon_i$ called the **residual** $\hat \epsilon_i$:
+$$ \hat \epsilon_i = y_i - \hat y_i $$
+
+*Exercise 3.10* 
+
+Do linear regression of and plotting in a native R way.  
+```{r}
+df <- data.frame(x, y)
+df
+l <- lm(df$y ~ df$x)
+l
+plot(df)
+abline(l[1], l[2])
+```
+
+Now find and plot residuals.
+```{r}
+df$resid = resid(l)
+df$predict = predict(l)
+df
+plot(x, df$resid)
+abline(0, 0)
+```
+
+Alternate ways to write the linear regression slope formula include...
+
+$$ \hat y_i - \bar y = \hat \beta (x_i - \bar x) $$
+and...
+
+$$ \frac{\hat y_i - \bar y}{s_y} = r \frac{x_i - \bar x}{s_x} $$
+...where the sides include the normalized z-score for $\hat y_i$ and $x_i$.
+
+*Exercise 3.13* Compute the regression assuming that $y$ is the explanatory variable.
+
+```{r}
+vary <- sum((y - ybar)^2) / (length(y) - 1)
+bhat <- covxy / vary
+ahat <- xbar - bhat * ybar
+c(bhat, ahat)
+```
+
+*Exercise 3.14* Show that the regression line from the reversed regression with $y$ as the explanatory variable is different from the line with $x$ as the explanatory variable.  (I cheated and looked at the answer to help with this one.)
+
+```{r}
+plot(df$x, df$y)
+abline(lm(df$y ~ df$x))
+lr <- lm(df$x ~ df$y)
+ahat <- lr$coefficients[1]
+bhat <- lr$coefficients[2]
+abline(a=-ahat/bhat, b=1/bhat, col="blue")
+points(mean(x), mean(y), pch=19, cex=2, col="steelblue")
+```
+
+*Exercise 3.15* Show that $\hat \beta_x \hat \beta_y = r^2$
+
+$$
+\begin{align*}
+\hat\beta_y &= \frac{rs_y}{s_x} \, ?, \\
+\hat\beta_x &= \frac{rs_x}{s_y} \, ?, \\
+\hat\beta_x \hat\beta_y &= r\frac{s_x}{s_y} r\frac{s_y}{s_x} \\
+&= r^2 \frac{s_x}{s_y} \frac{s_y}{s_x} \\
+\hat\beta_x \hat\beta_y &= r^2
+\end{align*}
+$$
+
+"$r^2$ of the variance in the data can be explained by the fit."  $r^2$ is called the **coefficient of determination**.  "The remaining $1-r^2$ of the variance in the data is found in the residuals."
+
+### 3.2.1 Transformed Variables
+
+Even if no linear relationship exist between two variables $x$ and $y$, there may still be a linear relationship between transformations of the variables $\tilde x = \psi(x)$ and $\tilde y = g(x)$.
+
+$$ g(y_i) = \alpha + \beta \psi (x_i) + \epsilon_i $$
+
+Example:
+
+$$
+\begin{align*}
+y_i &= Ae^{kx_i + \epsilon_i} \\
+\ln y_i &= \ln A + kx_i + \epsilon_i
+\end{align*}
+$$
+
+*Example 3.21* "In the data on world oil production, the relationship between the explanatory variable and response variable is nonlinear but can be made to be linear with a simple transformation, the common logarithm."  
+
+Here is the oil data [I may have made a typo, answers below based on this data are close but not exactly the same]
+
+```{r}
+year = c(1880, 1890, 1900, 1905, 1910, 1915, 1920, 1925, 1930, 1935,
+         1940, 1945, 1950, 1955, 1960, 1962, 1964, 1966, 1968, 1970,
+         1972, 1974, 1976, 1978, 1980, 1982, 1984, 1986, 1988)
+# In billions of barrels
+oil = c(.030, .077, .149, .215, .328, .432, .689, 1.069, 1.412, 1.655,
+        2.150, 2.595, 3.803, 5.626, 7.674, 8.882, 10.310, 12.016, 14.014, 16.690, 
+        18.584, 20.389, 20.188, 21.922, 21.722, 19.411, 19.837, 20.246, 21.338)
+length(year)
+length(oil)
+par(mfcol=1:2)
+plot(year, oil, type="b",
+     main="World Oil Production", 
+     ylab = "billions of barrels")
+plot(year, log(oil, 10), type="b", 
+     main="World Oil Production",
+     ylab = "log(billions of barrels)")
+```
+
+
+The model:
+
+$$ \log y_i = \alpha + \beta x_i + \epsilon_i$$
+
+Estimate $\hat \alpha$ and $\hat \beta$ via least squares.
+
+
+```{r}
+logbarrel = log(oil, 10)
+use = lm(logbarrel~year)
+summary(use)
+```
+
+*[Note: I think mathematical notation for $\widehat{log(barrel)}$ on page 46 would be $\ln$, not $\log$]
+
+Converting $\hat\beta$ back to $\hat k$ and muliplying by natural log of 10 $\ln10$ gives a 6% / year growth.
+
+```{r}
+use = lm(logbarrel ~ year)
+use$coefficients[2] * log(10)
+```
+
+Now plot the residuals.
+
+```{r}
+plot(year, resid(use))
+```
+
+## 3.3 Extensions
+
+Only covered briefly, not in depth.  Both allow multiple parameters, numbered starting from $\beta_0$ rather than $\beta_1$ for for reasons that will become clear with section 3.3.2 coverage of design matrices.
+
+$$\beta = (\beta_0, \beta_1, \beta_2, \dots, \beta_k)$$
+
+
+
+
+## 3.3.1 Non-Linear Regression
+
+Model
+
+$$ y_i = g(x_i | \beta) + \epsilon_i $$
+
+We want to minimize the least squares
+
+$$ SS(\beta) \sum_{i=1}^n(y_i - g(x_i|\beta))^2 $$
+
+... but for most nonlinear equations that can't be expressed in "closed form", so we use numerical procedures such as **gradient descent** instead of direct calculation to get $\hat\beta$.  Sometimes we can seed the algorithm by using $\hat\beta$ from a linear regression as a starting point for gradient descent.  Using a chemistry example I skipped earlier...
+
+```{r}
+S <- c(1, 2, 5, 10, 20)
+V <- c(1.0, 1.5, 2.2, 2.5, 2.9)
+Sinv <- 1/S
+Vinv <- 1/V
+(chem.lm <- lm(Vinv ~ Sinv)) # Outer parentheses force printing it.
+1/chem.lm$coefficients[1] # is v
+# Somehow the other answer is k=2.122
+```
+
+...we try gradient descent (I think this uses that anyway, gnls stands for *generalized nonlinear least squares*)...
+
+[*NOTE: Package `nlme` mistyped as `nmle` in book.]
+
+```{r}
+#install.packages("nlme")
+library(nlme)
+#help(nlme)
+#help(gnls)
+
+gnls(V ~ Vmax*S/(Km+S),
+     data = data.frame(V,S),
+     start = list(Vmax=3.1141, Km=2.1216))
+```
+
+
+## 3.3.2 Multiple Linear Regression
+
+Model
+
+$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik} + \epsilon_i $$
+
+*Exercise 3.26* Show $(Cx)^T = x^TC^T$
+
+Example with matrix $C$ dimension 2x2 and column vector $x$ of length 2.
+
+$$
+\left(
+\begin{bmatrix}
+a & b \\
+c & d
+\end{bmatrix}
+\begin{bmatrix}
+e \\
+f
+\end{bmatrix}
+\right)^T
+=
+\begin{bmatrix}
+ae + bf \\
+ce + df
+\end{bmatrix}^T
+=
+\begin{bmatrix}
+ae + bf & ce+df
+\end{bmatrix} 
+\\
+\begin{bmatrix}
+e \\
+f
+\end{bmatrix}^T
+\begin{bmatrix}
+a & b \\
+c & d
+\end{bmatrix}^T
+=
+\begin{bmatrix}
+e & f
+\end{bmatrix}
+\begin{bmatrix}
+a & c \\
+b & d
+\end{bmatrix}
+=
+\begin{bmatrix}
+ea + fb & ec+fd
+\end{bmatrix}
+$$
+
+*Exercise 3.27* Given
+
+$$ C = \begin{bmatrix} 1 & 3 \\ 2 & 4 \end{bmatrix} $$
+
+...find...
+
+$$
+C^T = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \\
+\det(C) = 4 - 6 = -2 \\
+C^{-1} = \frac{1}{-2} \begin{bmatrix} 4 & -3 \\ -2 & 1 \end{bmatrix}
+       = \begin{bmatrix} -2 & \frac32 \\ 1 & -\frac12 \end{bmatrix}
+$$
+... or, in R [*note: book answer shows inverse as `chol2inv`, which doesn't seem to give the inverse*]...
+
+```{r}
+C <- matrix(c(1, 2, 3, 4), nrow = 2)
+C
+t(C)
+det(C)
+C^-1 # Nope!
+C %*% C^-1
+library("MASS")
+ginv(C)
+C %*% ginv(C)
+ginv(C) %*% C
+round(C %*% ginv(C), 10)
+```
+
+$$
+y = X\beta + \epsilon
+$$
+Where:
+
+* $y = (y_1, y_2, \dots , y_n)^T$ is a vector of responses.
+* $X$ is a **design matrix** of predictors.  The column of ones give a constant term, and align with $\beta_0$, 
+$$
+X = 
+\begin{bmatrix}
+1 & x_{11} & x_{12} & \cdots & x_{1k} \\
+1 & x_{21} & x_{22} & \cdots & x_{2k} \\
+\vdots & \vdots & \vdots & & \vdots   \\
+1 & x_{n1} & x_{n2} & \cdots & x_{nk} \\
+\end{bmatrix}
+$$
+
+* $\beta = (\beta_0, \beta_1, \beta_2, \dots, \beta_k)^T$ is a vector of parameters.
+* $\epsilon = (\epsilon_1, \epsilon_2, \dots, \epsilon_n)^T$ is a vector of errors.
+
+$$
+\hat\beta = (X^TX)^{-1}X^Ty
+$$
+
+US Population example in R
+```{r}
+uspop<-c(3929214,5236631,7239881,9638453,12866020,17069453,23191876,31443321,38558371,49371340,62979766,76212168,92228496,106021537,123202624,132164569,151325798,179323175,203211926,226545805,248709873,281421906,308745538)
+year<-c(0:22)*10+1790
+par(mfrow=c(1,2))
+plot(year,uspop)
+loguspop<-log(uspop,10)
+plot(year,loguspop)
+```
+
+```{r}
+# Keep years smaller by subtracting 1790
+year1<-year-1790
+year2<-year1^2
+lm.uspop <- lm(loguspop ~ year1 + year2)
+summary(lm.uspop)
+```
+
+```{r}
+resid.uspop<-resid(lm.uspop)
+plot(year,resid.uspop)
+```
+

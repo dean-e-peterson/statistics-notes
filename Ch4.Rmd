@@ -1,0 +1,31 @@
+---
+title: "Chapter 4 - Producing Data"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## 4.1 Preliminary steps
+
+* Anecdote or unexplained lab occurrence, leads to ...
+* Fact-finding interviews or experimental assays, followed by ...
+* Literature review and exploratory data analysis to find patterns and inconsistencies, then ...
+* Examine data with quantitative summary statistics and graphical methods.
+
+Investigations are done with a sample to learn about the population (unless you have a census of the total population.)
+
+**Causality** explains **response variables** by knowing **explanatory variables**, while trying to avoid other factors called **lurking**, or **confounding**, variables.  To avoid confounding, one or both of the following are done...
+
+* Subdividing the population into more similar groups by **cross tabulation**, or **stratification**.
+* Build a **parametric model** which includes the cross tabulated variables.
+
+## 4.2 Professional Ethics
+
+See [American Statistical Society *Ethical Guidelines for Statistical Practice*](http://www.amstat.org/about/ethicalguidelines.cfm) and [International Staistical Institute material on *Professional Ethics*](https://www.isi-web.org/index.php/about-isi/policies/professional-ethics)
+
+
+

@@ -1,0 +1,76 @@
+---
+title: "Cheatsheet"
+output: html_document
+---
+
+## Terms
+
+**Population** - The entire group of things that we ultimately want to learn about.
+
+**Sample** - A subset of the population which we study to learn about the *population*.
+
+**Statistic** - A property of the sample.  Used to estimate a *parameter* of the *population*.
+
+**Parameter** - A property of the population.  Estimated by a *statistic* of the *sample*.
+
+**Qualitative** - Categorical.  Example brown, blue, green, gray.
+
+**Quantitative** - Numerical.  Example, a count of people or a measurement of an amount of water.
+
+**Discrete** - Non-continuous *quantitative* data.  Things that can be counted.  Example, you can have 4 or 5 people, but not 4 1/2 people.
+
+**Continuous** - *Quantitative* data that can be measured continuously.  Example, amount of water, you can have 4 gallons, 5 gallons, 4.5 gallons, 4.0001 gallons, etc.
+
+### Levels of Measurement
+
+**Nominal scale** - Unordered *categorical* data.  Example, favorite foods.  Sushi is not inherently less than or greater than pizza.
+
+**Ordinal scale** - Ordered *categorical* data.  You can put them in order, but the difference between values cannot be measured.  Example, "strongly agree", "agree", "disagree", "strongly disagree".
+
+**Interval scale** - Ordered *quantitative* data where differences can be measured, but ratios cannot be taken because there is no true 0 point.  Example, Fahrenheit scale, where the difference between 60 and 80 is 20, but where 80 is not four times as hot as 20.
+
+**Ratio scale** - Ordered *quantitative* data where differences and ratios can both be calculated.  Example, Kelvin scale or test scores counted from 0.
+
+### Random Sampling
+"A sample should have the same characteristics as the population it is representing." - [OpenSTAX Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.
+
+**Simple Random Sample** - Each sample of the same size is equally likely.
+
+**Stratified Sample** - Divide population into groups called strata, and take a proportionate number from each stratum.
+
+**Cluster Sample** - Divide population into groups called clusters, randomly select some clusters, and take all members from the selected clusters.
+
+**Systematic Sample** - Randomly select a starting point, then take every n<sup>th</sup> item from a listing, wrapping around to the start.  Example, 20,000 names in a phone book, to get a sample of 400, choose a starting point and pick every 50<sup>th</sup> name.
+
+**Convenience Sample** - *NOT random!  May be highly biased!*  Just use sample that is easily gotten.
+
+Sampling can be done with or without replacement.  True random sampling is done **with replacement**, where the same member of a population can be chosen more than once.  However, with a large population and small sample, sampling **without replacement** is approximately the same, and more frequently done.
+
+## Probability
+
+$$P(E|F)\text{ Probability of E given F}$$
+$$P(E~and~F) = P(E|F)P(F)$$
+$$P(E|F) = \frac{P(E~and~F)}{P(F)}$$
+$$P(E) = P(E|F)\text{ iff E and F are independent}$$
+Bayes Theorem
+$$P(E|F) = \frac{P(E)P(F|E)}{P(E)P(F|E) + P(not~E)P(F|not~E)}$$
+
+## Descriptive Statistics
+
+Note that relative frequency $\frac{n_x}{n}$ approaches probability $p(x)$ as sample size increases.
+
+| | Sample | Population (Model) | |
+| --- | --- | --- | --- |
+| | **statistic** - Information about a sample (e.g. sample mean). | **parameter** - Information about the population (e.g. population mean). |
+| | | **Discrete** | **Continuous** |
+| Mean | $$\bar{x} = \sum_{i=1}^n \frac{x_i}{n}$$ | $$\mu = \sum_{all~x} x~p(x)$$ | $$\mu = \int_{-\infty}^\infty x ~ f(x)dx$$ |
+| Variance | $$s^2 = \sum_{i=1}^n\frac{(x_i-\bar{x})^2}{n - 1}$$ | $$\sigma^2 = \sum_{i=1}^n\frac{(x_i-\mu)^2}{n} \\ \sigma^2 = \sum_{all~x}(x-\mu)^2~p(x) $$ | $$\sigma^2 = \int_{-\infty}^\infty(x-\mu)^2~f(x)dx $$ |
+| Standard Deviation | $$s = \sqrt{s^2} $$ | $$\sigma = \sqrt{\sigma^2} $$ | $$\sigma = \sqrt{\sigma^2} $$ |
+| Covariance| $$\text{cov}(x,y) = \frac{1}{n-1} \sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})$$ | | |
+| Correlation | $$ r(x,y) = \frac{1}{n-1} \sum_{i=1}^n\left(\frac{x_i-\bar{x}}{s_x}\right)\left(\frac{y_i-\bar{y}}{s_y}\right) = \frac{\text{cov}(x,y)}{s_xs_y} $$ | | |
+| Least squares linear regression| $$ \begin{align*} \hat y_i &= \hat\alpha + \hat\beta x_i\\ \hat\beta &= \frac{\text{cov}(x,y)}{\text{var}(x)} = \frac{rs_y}{s_x} \\ \hat\alpha &= \bar y - \hat\beta \bar x \end{align*} $$| $$ y_i = \alpha + \beta x_i + \epsilon_i $$ | |
+
+## Credits
+
+* [OpenSTAX Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.
+* [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins

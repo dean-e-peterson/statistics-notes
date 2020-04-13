@@ -1,0 +1,48 @@
+---
+title: "Ch1-Sampling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# commented out to see if it makes a difference 
+# knitr::opts_chunk$set(echo = TRUE)
+```
+
+*Mostly from OpenSTAX [Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.*
+
+## Virtual Coin Tossing
+Let's flip 50 coins virtually.  `replace=T` means to sample with replacement, so that the same value (in this case H or t) can be returned more than once.
+```{r}
+sample(c("H", "t"), 50, replace=T)
+```
+
+## Terms
+
+**Population** - The things we are studying.
+
+**Sample** - A subset of the population which we study to learn about the population.
+
+**Data** - What we get from sampling.  (Denoted by lower case like $x$ and $y$.)
+
+**Statistic** - A property of the sample.  Used to estimate a *parameter* of the *population*.
+
+**Parameter** - A property of the population.  Estimated by a *statistic* of the *sample*.
+
+**Variable** - A characteristic or measurement that can be taken for each member of a population.  (Denoted by capitals like $X$ and $Y$.)
+
+### Random Sampling
+"A sample should have the same characteristics as the population it is representing."
+
+**Simple Random Sample** - Each sample of the same size is equally likely.
+
+**Stratified Sample** - Divide population into groups called strata, and take a proportionate number from each stratum.
+
+**Cluster Sample** - Divide population into groups called clusters, randomly select some clusters, and take all members from the selected clusters.
+
+**Systematic Sample** - Randomly select a starting point, then take every n<sup>th</sup> item from a listing, wrapping around to the start.  Example, 20,000 names in a phone book, to get a sample of 400, choose a starting point and pick every 50<sup>th</sup> name.
+
+**Convenience Sample** - *NOT random!  May be highly biased!*  Just use sample that is easily gotten.
+
+Sampling can be done with or without replacement.  True random sampling is done **with replacement**, where a member of the population can be chosen more than once.  However, with a large population and small sample, sampling **without replacement** is approximately the same, and more frequently done.
+
+

@@ -1,0 +1,33 @@
+---
+title: "Chapter 5 - Basics of Probability"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## 5.1 Introduction
+
+A *probability model* has
+
+* $\Omega$ - The **sample space**, the set of possible outcomes.
+* $A$ - An **event** - A collection of outcomes
+$$
+\begin{align*}
+A &= \{\omega_1, \omega_2, \cdots, \omega_n\} \\
+A &= \{\omega ; \omega \text{ has property } \mathcal P\}
+\end{align*}
+$$
+* $P$ - **Probability** - A function that assigns a number to each event.
+
+**Probability** - A branch of mathematics based on 3 axioms originally inspired by games of chance.
+
+1. $P(A) \geq 0$
+2. $P(\Omega) = 1$
+3. If two events are **mutually exclusive** or **disjoint** (i.e. $A \cap B = \emptyset$), then $P(A \cup B) = P(A) + P(B)$
+*  For the calculus version of axiom 3, for mutually exclusive events...
+$$ P\left( \, \bigcup_{j=1}^\infty A_j \right) = \sum_{j=1}^\infty P(A_j)$$
+
