@@ -1,0 +1,15 @@
+---
+title: "Chapter 6 - Conditional Probability and Independence"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## 6.1 Conditional Probability
+
+Restricting the sample space.
+

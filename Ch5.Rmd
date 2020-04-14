@@ -25,9 +25,74 @@ $$
 
 **Probability** - A branch of mathematics based on 3 axioms originally inspired by games of chance.
 
+## 5.2 Axioms of Probability
+
 1. $P(A) \geq 0$
 2. $P(\Omega) = 1$
 3. If two events are **mutually exclusive** or **disjoint** (i.e. $A \cap B = \emptyset$), then $P(A \cup B) = P(A) + P(B)$
-*  For the calculus version of axiom 3, for mutually exclusive events...
+*  The calculus version of axiom 3, still for mutually exclusive events...
 $$ P\left( \, \bigcup_{j=1}^\infty A_j \right) = \sum_{j=1}^\infty P(A_j)$$
+
+## 5.3 Consequences of the Axioms
+
+1. The **complement** of $A$ is $A^c = \{\omega;\omega \notin A\}$
+$$ P(A^c) = 1 - P(A) $$
+$$ P(A) + P(A^c) = P(A \cup A^c) = P(\Omega) = 1 $$
+2. The **difference** $B \setminus A$ are outcomes in $B$ but *not* in $A$.
+$$ \text{if } A \subset B , ~~~ P(B \setminus A) = P(B) - P(A) $$
+3. **Monotonicity** Symbol $\subset$ means **contains in**
+$$ \text{if } A \subset B, ~~~ P(A) \leq P(B) $$
+$$ P(A) \leq P(\Omega) = 1 $$
+That, combined with axiom 1, means probability is always between 0 and 1 (inclusive)
+$$ 0 \leq P(A) \leq 1 $$
+4. **Inclusion-Exclusion**
+$$ P(A \cup B) = P(A) + P(B) - P(A \cap B) $$
+
+5. **The Bonferroni Inequality**
+$$ P(A \cup B) \leq P(A) + P(B) $$
+
+6. **Continuity Property** [See book, basically nested stuff acts nested?]
+
+## 5.4 Counting
+
+“In the case of equally likely outcomes, ﬁnding the probability of an event A is the result of two counting problems - namely finding $\#(A)$, the number of outcomes in the event A and finding $\#(\Omega)$, the number of outcomes in the sample space, $\Omega$.”
+
+### 5.4.1 Fundamental Principle of Counting
+The fundamental principle of counting says if you have two experiments, with $n_1$ and $n_2$ possible outcomes respectively, then in total there are $n_1 \times n_2$ possible outcomes.
+
+An example would be the number of ways of choosing a president and vice-president from a group of $n$ people. Assuming one person could not hold both posts, the number of outcomes is $n \times (n−1)$
+
+*Exercise 5.10* Find the # of ways to draw two cards? $52 \times 52$ if you reshuffle in between? $52 \times 51$ if you do not reshuffle. If you do not reshuffle, the number of ways to draw two aces is $4 \times 3$.
+
+*Exercise 5.11* Generalizing the **fundamental principle of counting** to $k$ experiments, I think you get...
+$$ \text{number of outcomes} = \sum_{i=1}^k n_i $$
+
+### 5.4.2 Permutations
+**Permutation** - When you have $n$ things, and pick out an **ordered** subset of $k$ of those things.
+$$ \text{permutation outcomes } = n \times (n - 1) \times \cdots \times (n - k + 1) = (n)_k = \frac{n!}{(n-k)!} $$
+
+Note that $(n)_k$ is pronounced "n falling k".
+
+*Example 5.12* - Birthday problem, the probability among $k$ people that at least two people share a birthday.</p>
+$$ P\{\text{at least one pair share birthdays}\} = 1 - \frac{(365)_k}{365^k} $$
+```{r}
+bday <- data.frame(people = c(1:100), prob = rep(1, 100))
+for (k in 2:100) {bday$prob[k] = bday$prob[k-1]*(365-k+1)/365}
+bday$compl = 1 - bday$prob
+plot(bday$people, bday$compl)
+```
+
+### 5.4.3 Combinations
+**Combination** - When you have $n$ things, and pick out a subset of $k$ of those things such that **order does not matter**.
+$$ \text{combination outcomes } = \frac{(n)_k}{k!} = {n \choose k} = \frac{n!}{k!(n-k)!} $$
+
+Note that ${n \choose k}$ is pronounced "n choose k".
+
+*Exercise 5.17* - Verify the identities 
+$$ {n \choose 1} = {n \choose n-1} = n ~~~ \text{and} ~~~ {n \choose k} = {n \choose n-k} $$
+
+```{r}
+choose(8, 3)
+```
+
 
