@@ -46,5 +46,46 @@ which, in English, is roughly "The probability of both A and B happening is equa
 This can be expanded into a **chain rule**:
 $$ P(A \cap B \cap C) = P(A|B \cap C)P(B \cap C) = P(A|B \cap C)P(B|C)P(C) $$
 
+*Exercise 6.5* With $g$ and $b$ being the number of green and blue balls, respectively, show that:
 
+$$
+\begin{align*}
+{4 \choose 2} \frac{(g)_2(b)_2}{(b+g)_4} &= \frac{{b\choose2}{g\choose2}}{{b+g\choose4}} \\
+&= \frac{4!}{2!2!}\cdot\frac{\frac{b}{(b-2)!}\cdot\frac{g}{(g-2)!}}{\frac{b+g}{(b+g-4)!}} \\
+&= \frac{\frac{b}{2!(b-2)!}\cdot\frac{g}{2!(g-2)!}}{\frac{b+g}{4!(b+g-4)!}} \\
+&= \frac{{b\choose2}{g\choose2}}{{b+g\choose4}}
+\end{align*}
+$$
 
+## 6.3 The Law of Total Probability
+
+A **partition** of sample space $\Omega$ is a finite collection of pairwise mutually exclusive events $\{C_1, C_2,\dots,C_n\}$ whose union is $\Omega$.
+
+The **law of total probability** 
+$$ P(A) = \sum_{i=1}^n P(A|C_i)P(C_i) $$
+
+*Exercise 6.8* [See book]
+
+## 6.4 Bayes Formula
+
+Let $C$ represent the event that the person has a disease.  Let $A$ represent that the person tests positive for the disease.  We know that
+$$
+\begin{align*}
+P(C) &= .001 \\
+P(A|C) &= .9 \\
+P(A|C^c) &= .01 \\
+\end{align*}
+$$
+
+**Bayes formula** answers the question, what is $P(C|A)$?  
+
+$$
+\begin{align*}
+P(C|A) &= \frac{P(A|C)}{P(A)}P(C) \\
+&= \frac{P(A|C)P(C)}{P(A|C)P(C) + P(A|C^c)P(C^c)}
+\end{align*}
+$$
+
+Bayes formula can be generalized to not just $C$ and $C^c$, but to any partition of the sample space where $P(C_i) > 0$ for all $i$.
+
+$$ P(C_j|A) = \frac{P(A|C_j)P(C_j)}{\sum_{i=1}^n P(A|C_i)P(C_i)} $$

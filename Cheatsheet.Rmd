@@ -53,7 +53,7 @@ $$P(E~and~F) = P(E|F)P(F)$$
 $$P(E|F) = \frac{P(E~and~F)}{P(F)}$$
 $$P(E) = P(E|F)\text{ iff E and F are independent}$$
 Bayes Theorem
-$$P(E|F) = \frac{P(E)P(F|E)}{P(E)P(F|E) + P(not~E)P(F|not~E)}$$
+$$P(E|F) = \frac{P(E)P(F|E)}{P(E)P(F|E) + P(not~E)P(F|not~E)} = \frac{P(E)P(F|E)}{P(F)}$$
 
 ## Descriptive Statistics
 
