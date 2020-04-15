@@ -9,7 +9,42 @@ output: html_document
 knitr::opts_chunk$set(comment = NA)
 ```
 
-## 6.1 Conditional Probability
+## 6.1 Restricting the sample space - Conditional Probability
 
-Restricting the sample space.
+The **conditional probability** of $A$ "given" $B$ is written $P(A|B)$
+
+When all outcomes are equally likely, it can be expressed as # of outcomes as
+$$ P(A|B) = \frac{\#(A\cap B)}{\#(B)} $$
+
+Or, more generally, as a probability as
+
+$$ P(A|B) = \frac{\#(A \cap B)/\#(\Omega)}{\#(B)/\#(\Omega)} = \frac{P(A\cap B)}{P(B)} $$
+
+Note that it must be true that $P(B) > 0$.
+
+*Exercise 6.2* Roll two dice. Find $P\{\text{sum is 8}|\text{first die shows 3}\}$ and $P\{\text{sum is 8}|\text{first die shows 1}\}$.  Since all outcomes are equally likely,
+
+$$ P\{\text{sum is 8}|\text{first die shows 3}\} = \frac{P\{\text{sum is 8 and first die shows 3}\}}{P\{\text{first die shows 3}\}} = \frac{1}{6} $$
+$$ P\{\text{sum is 8}|\text{first die shows 1}\} = \frac{P\{\text{sum is 8 and first die shows 1}\}}{P\{\text{first die shows 1}\}} = \frac{0}{6} $$
+
+*Exercise 6.3* Roll two four-sided dice.  Find $P(\{\text{sum is at least 5}\})$, $P(\{\text{first die is 2}\})$ , and $P(\{\text{sum is at least 5}|\text{first die is 2}\})$.
+
+$$ P(\{\text{sum is at least 5}\}) = \frac{4}{16} + \frac{3}{16} + \frac{2}{16} + \frac{1}{16} = \frac{10}{16} = \frac58$$
+
+$$ P(\{\text{first die is 2}\}) = \frac14 $$
+
+$$ P(\{\text{sum is at least 5}|\text{first die is 2}\}) = \frac{\frac{2}{16}}{\frac14} = \frac{\frac{1}{8}}{\frac14} = \frac{4}{8} = \frac12$$
+
+
+## 6.2 The Multiplication Principal
+
+The formula above can be rewritten as **the multiplication principle**
+
+$$ P(A \cap B) = P(A|B)P(B) $$
+which, in English, is roughly "The probability of both A and B happening is equal to the probability of A given B times the probability of B happening in the first place."
+
+This can be expanded into a **chain rule**:
+$$ P(A \cap B \cap C) = P(A|B \cap C)P(B \cap C) = P(A|B \cap C)P(B|C)P(C) $$
+
+
 
