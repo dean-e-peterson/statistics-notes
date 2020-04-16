@@ -89,3 +89,33 @@ $$
 Bayes formula can be generalized to not just $C$ and $C^c$, but to any partition of the sample space where $P(C_i) > 0$ for all $i$.
 
 $$ P(C_j|A) = \frac{P(A|C_j)P(C_j)}{\sum_{i=1}^n P(A|C_i)P(C_i)} $$
+
+## 6.5 Independence
+
+Events $A$ and $B$ are **independent** if the occurence of one does not impact the probability of another.  In other words, independence means
+
+$$
+\begin{align*}
+P(A) &= P(A|B) \\
+P(A)P(B) &= P(A \cap B)
+\end{align*}
+$$
+
+Events $A_1,\dots,A_n$ are independent if for any choices of them
+$$ P(A_i \cap A_j \cap \cdots \cap A_k) = P(A_i)P(A_j)\cdots P(A_k) ? $$
+
+*Exercise 6.13* If $A$ and $B$ are independent events, show that $A^c$ and $B$, $A$ and $B^c$, and $A^c$ and $B^c$ are also independent.
+
+$$
+\begin{align*}
+P(A) = &P(A|B)P(B) + P(A|B^c)P(B^c) \\
+1 - P(A) = &1 - P(A|B)P(B) - P(A|B^c)P(B^c) \\
+&???
+\end{align*}
+$$
+
+*Exercise 6.15* Flip 10 *biased* coins.  Their outcomes are independent with the $i^{th}$ coin being heads with probability $p_i$.  Find 
+$$ P\{\text{first heads, third tails, seventh & ninth heads}\} = p_1(1-p_3)p_7p_9$$
+
+
+
