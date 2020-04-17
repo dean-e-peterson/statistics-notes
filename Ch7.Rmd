@@ -1,0 +1,43 @@
+---
+title: "Chapter 7 - Random Variables and Distribution Functions"
+output: html_document
+---
+
+*Notes from working through [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## 7.1 Introduction
+
+| Statistics | Probability |
+| --- | --- |
+| Empirical cumulative distribution function | Cumulative distribution function |
+| Sample means and variances | Distributional means and variances |
+
+**Random Variable** - A function that takes in something from the probability space and spits out a real number.
+$$ X:\Omega \rightarrow \mathbb{R} $$
+
+## 7.2 Distribution Functions
+
+A **cumulative distribution function** of a random variable X is defined by
+$$ F_X(x) = P\{\omega \in \Omega ; X(\omega) \leq x\} $$
+Or, in more abbreviated notation...
+$$ F_X(x) = P\{X \leq x\} $$
+*Exercise 7.9* Let $X$ be the number of heads on three independent flips of a *biased* coin that gives heads with probability $p$.  Give the cumulative distribution function $F_X$ for $X$.
+
+*Exercise 7.10* Let $X$ be the number of spades in a collection of three cards.  Give the cumulative distrubtion function for $X$ and plot it with R.
+
+| Spades | 0 | 1 | 2 | 3 |
+| --- | --- | --- | --- | --- |
+
+
+
+
+
+
+
+
+
+
