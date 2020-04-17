@@ -50,10 +50,10 @@ $$ P(A \cap B \cap C) = P(A|B \cap C)P(B \cap C) = P(A|B \cap C)P(B|C)P(C) $$
 
 $$
 \begin{align*}
-{4 \choose 2} \frac{(g)_2(b)_2}{(b+g)_4} &= \frac{{b\choose2}{g\choose2}}{{b+g\choose4}} \\
+{4 \choose 2} \frac{(g)_2(b)_2}{(b+g)_4} &= \frac{ {b\choose2}{g\choose2}}{ {b+g\choose4}} \\
 &= \frac{4!}{2!2!}\cdot\frac{\frac{b}{(b-2)!}\cdot\frac{g}{(g-2)!}}{\frac{b+g}{(b+g-4)!}} \\
 &= \frac{\frac{b}{2!(b-2)!}\cdot\frac{g}{2!(g-2)!}}{\frac{b+g}{4!(b+g-4)!}} \\
-&= \frac{{b\choose2}{g\choose2}}{{b+g\choose4}}
+&= \frac{ {b\choose2}{g\choose2}}{ {b+g\choose4}}
 \end{align*}
 $$
 
