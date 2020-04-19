@@ -27,16 +27,50 @@ Or, in more abbreviated notation...
 $$ F_X(x) = P\{X \leq x\} $$
 *Exercise 7.9* Let $X$ be the number of heads on three independent flips of a *biased* coin that gives heads with probability $p$.  Give the cumulative distribution function $F_X$ for $X$.
 
-*Exercise 7.10* Let $X$ be the number of spades in a collection of three cards.  Give the cumulative distrubtion function for $X$ and plot it with R.
+*Exercise 7.10* Let $X$ be the number of spades in a collection of three cards.  Give the cumulative distribution function for $X$ and plot it with R.
 
 | Spades | 0 | 1 | 2 | 3 |
 | --- | --- | --- | --- | --- |
 
 
+```{r}
+spades <- 0:3
+f <- ( (choose(13, spades) * choose(39, 3 - spades)) / choose(52,3) )
+f
+F <- cumsum(f)
+F
+plot(spades, F, type="s", ylim=c(0,1))
+```
+
+*Exercise 7.11* Find the cumulative distribution function of $Y=X^3$ in terms of $F_X$, the distribution function for $X$.
+
+## 7.3 Properties of Distribution Function
+
+A distribution function $F_X$ starts at 0, ends at 1, and does not decrease as $x$ increases.
+
+*Exercise 7.17* [See book] $\pi \left(\frac23\right)^2 - \pi \left(\frac13\right)^2 = \frac13 \pi$
+
+$$
+\begin{align*}
+A &= \pi r^2 & A&=\pi 1^2 & A=\pi   \\
+r &= \sqrt\frac{A}{\pi} \\
+\text{3rd quartile, } r_{third} &= \sqrt \frac34 \\
+\text{median, } r_{median} &= \sqrt \frac12 \\
+\text{1st quartile, } r_{first} &= \sqrt \frac14 \\
+\end{align*}
+$$
+
+I believe distribution functions in R are prefixed with `p` for probability (such as `pnorm()`).
+
+## 7.4 Mass Functions
+
+The **(probability) mass function** of a discrete random variable $X$ is
+$$ f_X(x) = P\{X = x\} $$
+
+It is always positive, and sums to 1 for all $x$.
 
 
-
-
+## 7.5 Density Functions
 
 
 
