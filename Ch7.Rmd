@@ -37,9 +37,9 @@ $$ F_X(x) = P\{X \leq x\} $$
 spades <- 0:3
 f <- ( (choose(13, spades) * choose(39, 3 - spades)) / choose(52,3) )
 f
-F <- cumsum(f)
-F
-plot(spades, F, type="s", ylim=c(0,1))
+Fx <- cumsum(f)
+Fx
+plot(spades, Fx, type="s", ylim=c(0,1))
 ```
 
 *Exercise 7.11* Find the cumulative distribution function of $Y=X^3$ in terms of $F_X$, the distribution function for $X$.
@@ -62,6 +62,8 @@ $$
 
 I believe distribution functions in R are prefixed with `p` for probability (such as `pnorm()`).
 
+
+
 ## 7.4 Mass Functions
 
 The **(probability) mass function** of a discrete random variable $X$ is
@@ -71,6 +73,32 @@ It is always positive, and sums to 1 for all $x$.
 
 
 ## 7.5 Density Functions
+
+
+## Dean's Distribution Interlude
+
+Here are some distributions graphed in R, with the mass or density function in black, and the cumulative distribution function in blue.
+
+The normal distribution.
+```{r}
+curve(pnorm, xlim=c(-3,3), col="blue") # Normal cumulative probability.
+curve(dnorm, add=T)                    # Normal density
+abline(h=.5, v=0, col="lightgray")
+```
+```
+
+The binomial distribution (for 50 trials, 50% probability)
+```{r}
+plot(pbinom(q=0:50, size=50, prob=0.5), type="s", col="blue")
+```
+
+```{r}
+normies <- rnorm(100000)
+plot(cumsum(sort(normies)) / 100000)
+hist(normies, freq=TRUE, breaks=seq(-5,5,.1))
+
+```
+
 
 
 
