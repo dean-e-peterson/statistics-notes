@@ -168,9 +168,65 @@ df
 
 [Say something about this?  It basically seems to work out as you'd expect.]
 
+Multiple random variables
+
+### 7.7.1 Discrete Random Variables
+
+**Joint probability mass function**
+
+$$ f_{X_1,X_2}(x_1, x_2) = P\{X_1 = x_1, X_2 = x_2\} $$
+
+For **independent** discrete random variables *only*, we can additionally say (from section 7.7.3)
+
+$$  f_{X_1,X_2}(x_1, x_2) = P\{X_1 = x_1, X_2 = x_2\} = P\{X_1 = x_1\}P\{X_2 = x_2\} = f_{X_1}(x_1)f_{X_2}(x_2) $$
+
+**Marginal probability mass function** - Add up the rows or columns.  That's probably where the name came from.
+
+$$ f_{X_1}(x_1) = P \{X_1 = x_1\} = \sum_{x_2} P\{X_1 = x_1, X_2 = x_2\} = \sum_{x_2} f_{X_1,X_2}(x_1, x_2) $$
+
 *Exercise 7.38*
 ```{r}
-
+m <- matrix(c(.09, .07, .1, .01, .04, 0, .06, .08, .03, .07, .05, .09, .01, .02, .08, .05, .02, .03, .06, .04), nrow=4)
+m
+rowSums(m)
+colSums(m)
+sum(rowSums(m))
+sum(colSums(m))
 ```
 
+**Conditional mass functions** is the probabilities of a random variable taking on a value given a value for a second random variable.
+
+$$ f_{X_2|X_1}(x_2|x_1) = P\{X_2 = x_2|X_1 = x_1\} = \frac{P\{X_1 = x_1, X_2 = x_2\}}{P\{X_1 = x_1\}} = \frac{f_{X_1, X_2}(x_1, x_2)}{f_{X_1}(x_1)} $$
+
+*Exercise 7.40*
+
+```{r}
+# Since R counts down the row first for elements of a matrix, transpose...
+t(t(m) / rowSums(t(m)))
+```
+
+### 7.7.2 Continuous Random Variables
+
+The **joint probability density function**
+$$ P\{x_1 < X_1 \leq x_1 + \Delta x_1, x_2 < X_2 \leq x_2 + \Delta x_2\} \approx f_{X_1, X_2}(x_1, x_2) \Delta x_1 \Delta x_2 $$
+
+For **independent** continuous random variables *only*, we can additionally say.
+
+$$ f_{X_1,X_2} (x_1,x_2) = f_{X_1}(x_1) F_{X_2}(x_2) $$
+
+**Marginal probability density function**
+
+$$ f_{X_1}(x_1) = \int_{-\infty}^\infty f_{X_1,X_2}(x_1,x_2)\, dx_2$$
+
+**Conditional density function**
+
+$$ f_{X_2|X_1}(x_2|x_1) = \frac{f_{X_1, X_2}(x_1, x_2)}{f_{X_1}(x_1)} $$
+
+### 7.7.3 Independent Random Variables
+
+See formulas marked with **independent** above.
+ 
+[See also comments in book on parameterized functions and **likelyhood**.]
+
+## 7.8 Simulating Random Variables
 
