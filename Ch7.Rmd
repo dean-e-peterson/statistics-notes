@@ -230,3 +230,64 @@ See formulas marked with **independent** above.
 
 ## 7.8 Simulating Random Variables
 
+*Example 7.45*
+
+```{r}
+x <- c(1, 2, 3, 4)
+f <- c(0.1, 0.2, 0.3, 0.4)
+sum(f)
+data <- sample(x, 50, replace=TRUE, prob=f)
+data
+table(data)
+counts <- numeric(4)
+for (i in 1:4) { counts[i] <- sum(data == i) }
+simprob <- counts/(sum(counts))
+df <- data.frame(x, f, simprob)
+df
+```
+
+*Exercise 7.46* Simulate the sums on each of 20 rolls of a pair of dice.  Repeat this for 1000 rolls and compare the simulation with the appropriate mass function.
+
+```{r}
+# First, generate the mass function vector for single roll of two dice.
+m <- matrix(nrow=6, ncol=6)
+for (i in 1:6) {
+  for (j in 1:6) {
+    m[i,j] <- i+j
+  }
+}
+m
+pair <- 2:12
+pair
+pair.f <- numeric(11)
+for (x in pair) {
+  pair.f[x - 1] <- sum(m == x)
+}
+pair.f <- pair.f/sum(pair.f)
+pair.f
+
+# Generate 20 rolls of a pair of dice, and compare results with mass function.
+s <- sample(pair, 20, prob=pair.f, replace=TRUE)
+s
+simprob <- numeric(11)
+for (i in 2:12) {
+  simprob[i - 1] <- sum(s == i)
+}
+simprob <- simprob/sum(simprob)
+data.frame(pair, pair.f, simprob)
+
+# Generate 1000 rolls, and compare results with mass function
+s <- sample(pair, 1000, prob=pair.f, replace=TRUE)
+simprob <- numeric(11)
+for (i in 2:12) {
+  simprob[i - 1] <- sum(s == i)
+}
+simprob <- simprob/sum(simprob)
+data.frame(pair, pair.f, simprob)
+
+```
+
+
+### 7.8.1 Discrete Random Variables and the `sample` command
+
+### 7.8.2 Continuous Random Variables and the Probability Transform
