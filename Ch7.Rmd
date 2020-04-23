@@ -148,6 +148,14 @@ plot(pgeom(q=0:50, prob=.1), col="blue", ylim=c(0,1))
 points(dgeom(x=0:50, prob=.1))
 ```
 
+The uniform distribution. (The `min` and `max` parameters default to 0 and 1.)
+
+```{r}
+plot(punif(seq(-1,2,.01)), type="l")
+lines(dunif(seq(-1,2,.01)), col="blue")
+```
+
+
 ## 7.6 Mixtures
 
 Such as 0 and 1 and $\pi$ and $1 - \pi$, or a bunch of $\pi_i$ summing to 1.  You can consider the $\pi_i$ as weights and just add up both the cumulative distribution function and the density functions, if I 
@@ -230,6 +238,8 @@ See formulas marked with **independent** above.
 
 ## 7.8 Simulating Random Variables
 
+### 7.8.1 Discrete Random Variables and the `sample` command
+
 *Example 7.45*
 
 ```{r}
@@ -288,6 +298,47 @@ data.frame(pair, pair.f, simprob)
 ```
 
 
-### 7.8.1 Discrete Random Variables and the `sample` command
 
 ### 7.8.2 Continuous Random Variables and the Probability Transform
+
+"If $X$ is a continuous random variable with a density $f_X$ that is positive everywhere in its domain, then the distribution function $F_X(x) = P\{X\leq x\}$ is strictly increasing.  In this case $F_X$ has an inverse function $F_X^{-1}$, known as the **quantile function**."
+
+The **probability transform** [which I don't get, but might be about the inverse function / flipping the input and output / looking at a cumulative distribution graph sideways as a quantile graph?]
+
+$$
+\begin{align*}
+U &= F_X(X) \\
+X &= F_X^{-1}(U)
+\end{align*}
+$$
+
+Random variable $U$ has constant density, a uniform distribution [?!] from interval [0,1]
+
+The inverse function $F_X^{-1}$ can be used along with R's uniform distribution function `runif()` to simulate other distributions? [If I'm understanding correctly]
+
+*Example 7.49* The dart board example again, where
+$$ x = F_X^{-1}(u) = \sqrt u $$
+
+```{r}
+u <- runif(100)
+xu <- sqrt(u)
+# Plot the empirical cumulative distribution function?
+plot(sort(xu), 1:length(xu)/length(xu),
+     type="s", xlim=c(0,1), ylim=c(0,1), xlab="x", ylab="probability")
+# Add the cumulative distribution function FX(x)=x^2 in blue
+x <- seq(0,1,0.01)
+lines(x, x^2, col="blue")
+```
+
+[Note: There is an implication that this is what R is essentially doing when it generates distributions other than `runif()`, such as `rexp()`]
+
+*Example 7.51* A similar thing but for an exponential random variable.
+
+$$
+\begin{align*}
+u &= F_X(x) = 1 - \exp(-\lambda x) \\
+x &= - \frac1\lambda \ln(1-u)
+\end{align*}
+$$
+
+
