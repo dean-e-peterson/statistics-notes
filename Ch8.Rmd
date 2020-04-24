@@ -10,3 +10,64 @@ knitr::opts_chunk$set(comment = NA)
 ```
 
 ## 8.1 Definition and Properties
+
+For data, the **sample mean** of a real-valued function $h$, when $p(x)$ is the proportion of observations that are value $x$.
+
+$$ \overline{h(x)} = \sum_x h(x)p(x)$$
+
+For a probability model, the **expected value** or **expectation** of a random variable $X$, when $P$ is the probability on the sample space $\Omega$
+
+$$ EX= \sum_{j=1}^N X(\omega_j) P\{\omega_j\} $$
+
+The expected value of a real-valued function $g$ of a random vector $X$.
+
+$$ Eg(X) = \sum_{j=1}^Ng(X(\omega_j))P\{\omega_j\} $$
+
+*Exercise 8.2* Fair die and loaded die expected value with $g(x)=x^2$.  Find $EX^2$ for these two examples.
+
+$$ Eg(X) = \frac{1^2}6 + \frac{2^2}6 + \frac{3^2}6 + 
+           \frac{4^2}6 + \frac{5^2}6 + \frac{6^2}6 = 
+           \frac{91}6 = 15 \frac16 $$
+
+$$ Eg(X) = \frac{1^2}4 + \frac{2^2}4 + \frac{3^2}4 + 
+           \frac{4^2}{12} + \frac{5^2}{12} + \frac{6^2}{12} = 
+           \frac{3}{12} + \frac{12}{12} + \frac{27}{12} + 
+           \frac{16}{12} + \frac{25}{12} + \frac{36}{12} =            
+           \frac{119}{12} = 9 \frac{11}{12} $$
+
+"The operation of taking an expectation ... is a **positive linear functional**"  One thing that means is that
+
+$$ E[c_1X_1 + c_2X_2] = c_1EX_1 + c_2EX_2 $$
+
+##8.2 Discrete Random Variables
+
+"Because sample spaces can be extraordinarily large ... we rarely use the probability space $\Omega$ to compute the expected value."  Instead, partition "the sample space $\Omega$ into the outcomes $\omega$ that result in the same value $x$ for the random variable $X(\omega)$."
+
+"$f_X(x_i) = P\{X=x_i\}$ is the probability mass function for X."
+
+$$ Eg(X) = \sum_{i=1}^n g(x_i)f_X(x_i) = \sum_x g(x)f_X(x)$$
+
+"...is the most frequently used method for computing the expectation of discrete random variables."
+
+[I take this to mean there is no reason to consider each individual outcome for a random variable $X$ if you know the probability mass function which tells you what proportion of outcomes have any given value $x$ of $X$.]
+
+*Exercise 8.5* Draw 5 cards from a standard deck.  Let $X$ be the number of hearts.  Use R to find the mass function for $X$ and use this to find $EX$ and $EX^2$.
+
+```{r}
+x <- 0:5
+x
+dx <- numeric(length(x))
+dx[1] <- (39/52)*(38/51)*(37/50)*(36/49)*(35/48)*1
+dx[2] <- (13/52)*(39/51)*(38/50)*(37/49)*(36/48)*5
+#...
+dx[6] <- (13/52)*(12/51)*(11/50)*(10/49)*(9/48)*1
+dx
+# Gave up solving myself, looked at answer...
+hearts <- c(0:5)
+f <- choose(13,hearts)*choose(39,5-hearts)/choose(52,5)
+f
+sum(f)
+sum(f*hearts)
+sum(f*hearts^2)
+```
+
