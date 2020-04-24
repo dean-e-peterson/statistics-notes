@@ -86,4 +86,55 @@ $S_n$ is called a **binomial random variable**.
 
 ## 8.4 Continuous Random Variables
 
+$$ Eg(X) = \int_{-\infty}^\infty g(x)f_X(x)dx $$
+To solve this, we use integration by parts, where
+
+$$ \int u(x) v(x) dx = u(x) \int v(x) dx - \int u'(x) (\int v dx) dx$$
+...or something like that?  ($u'(x) is the derivative of u(x)).
+
+While the area under the density function curve is 1, if I understand correctly, the expected value is the area under the survival function $\bar F_X (x) = 1 - F_X(x)$ (or, alternately, the "expected value is the area between the cumulative distribution function and the line $y=1$).  [I dont know if this is always the case.]
+
+"The most important density function we shall encounter is for $Z$, the **standard normal random variable**."
+
+$$ \phi(z) = \frac{1}{\sqrt{2\pi}} \exp(-\frac{z^2}{2}), z \in \mathbb{R}$$
+
+The cumlative distribution function 
+
+$$ \Phi(z) = P\{Z\leq z\}$$
+
+is calculated using numerical approximation instead of a formula.  R uses `pnorm(z)` for this.
+
+The **standardized version** of X is
+
+$$ Z = \frac{X-\mu}{\sigma}$$
+
+| Moment? | Standard normal random variable | Something like it | is this to distribution |
+| --- | --- | --- | --- |
+| First | $$EZ=0$$ | $$\mu = EX$$ | (distributional) mean |
+| Second | $$EZ^2=1$$ | $$\sigma^2 = E(X - \mu)^2$$| (distributional) variance |
+| Third | $$EZ^3=0$$ | $$\gamma_1 = E \left[\left(\frac{X-\mu}{\sigma}\right)^3\right]$$| skewness |
+| Fourth | $$EZ^4=3$$ | $$E \left[\left(\frac{X-\mu}{\sigma}\right)^4\right] - 3$$| kurtosis |
+
+*Exercise 8.21* Quadratic identity for variance
+$$ Var(a+bX) = b^2Var(x) $$
+
+## 8.7 Independence
+
+Expectation for multiple random variables is based on the **joint mass function** $f_{X_1,X_2}(x_1,x_2)$
+
+"The Expectation of the product of two **independent** random variables equals the product of the expectation."
+
+$$ E[g_1(X_1)g_2(X_2)] = E[g_1(X_1)]\cdot E[g_2(X_2)] $$
+
+## 8.8 Covariance and Correlation
+
+The **covariance** is 
+
+$$ Cov(X_1, X_2) = E[(X_1 - \mu_1)(X_2 - \mu_2)] $$
+
+$$ Var(X_1 + X_2) = Var(X_1) + 2 Cov(X_1, X_2) + Var(X_2)$$
+
+The **correlation** is
+
+$$ \rho (X_1, X_2) = \frac{Cov(X_1, X_2)}{\sqrt{Var(X_1)}\sqrt{Var(X_2)}} $$
 
