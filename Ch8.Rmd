@@ -39,7 +39,7 @@ $$ Eg(X) = \frac{1^2}4 + \frac{2^2}4 + \frac{3^2}4 +
 
 $$ E[c_1X_1 + c_2X_2] = c_1EX_1 + c_2EX_2 $$
 
-##8.2 Discrete Random Variables
+## 8.2 Discrete Random Variables
 
 "Because sample spaces can be extraordinarily large ... we rarely use the probability space $\Omega$ to compute the expected value."  Instead, partition "the sample space $\Omega$ into the outcomes $\omega$ that result in the same value $x$ for the random variable $X(\omega)$."
 
@@ -70,4 +70,20 @@ sum(f)
 sum(f*hearts)
 sum(f*hearts^2)
 ```
+
+## 8.3 Bernoulli Trials
+
+**Bernoulli Trials** each have two values, success (1) or failure (0).  Each trial has the same success probability $p$, and the outcomes of each trial is independent of the others.
+
+If $S_n = X_1 + X_2 + \cdots + X_n$ is the total number of successes in $n$ Bernoulli trials, then the expected number of successes is.
+
+$$ ES_n = np $$
+
+The probability of $n$ Bernoulli trials having $x$ successes is $p^x(1-p)^{n-x}$.  There are ${n \choose x}$ different orders of $n$ Bernoulli trials having $x$ successes.  Combining those two facts gives a probability mass function of
+
+$$ f_{S_n} = P\{S_n = x\} = {n \choose x} p^x(1-p^{n-x}) $$
+$S_n$ is called a **binomial random variable**.
+
+## 8.4 Continuous Random Variables
+
 
