@@ -108,6 +108,10 @@ The **standardized version** of X is
 
 $$ Z = \frac{X-\mu}{\sigma}$$
 
+## 8.6 Names for $Eg(X)$
+
+[See book if you want details, but here are some highlights...]
+
 | Moment? | Standard normal random variable | Something like it | is this to distribution |
 | --- | --- | --- | --- |
 | First | $$EZ=0$$ | $$\mu = EX$$ | (distributional) mean |
@@ -117,6 +121,9 @@ $$ Z = \frac{X-\mu}{\sigma}$$
 
 *Exercise 8.21* Quadratic identity for variance
 $$ Var(a+bX) = b^2Var(x) $$
+
+The **standard inner product** of two vectors is 
+$$ \langle \mathbf x, \mathbf y \rangle = \sum_{i=1}^d x_iy_i $$
 
 ## 8.7 Independence
 
@@ -130,11 +137,28 @@ $$ E[g_1(X_1)g_2(X_2)] = E[g_1(X_1)]\cdot E[g_2(X_2)] $$
 
 The **covariance** is 
 
-$$ Cov(X_1, X_2) = E[(X_1 - \mu_1)(X_2 - \mu_2)] $$
+$$ Cov(X_1, X_2) = E[(X_1 - \mu_1)(X_2 - \mu_2)] \,  ?= E[X_1X_2] - \mu_1\mu_2$$
 
 $$ Var(X_1 + X_2) = Var(X_1) + 2 Cov(X_1, X_2) + Var(X_2)$$
 
 The **correlation** is
 
 $$ \rho (X_1, X_2) = \frac{Cov(X_1, X_2)}{\sqrt{Var(X_1)}\sqrt{Var(X_2)}} $$
+
+*Exercise 8.24* Find the variance of a binomial random variable based on $n$ trials with success parameter $p$.  ###
+
+$$ \text{Var}(b) = E[(b - E(b))^2] \,\,? $$
+
+## 8.9 Quantile Plots and Probability
+
+A **Q-Q plot** for the normal distribution is also called a **normal probability plot**.  If the data follow a normal distribution, the plot should follow a straight line with a slope $s_x$ and y-intercept $\bar x$
+
+```{r}
+length(morley[,3])
+mean(morley[,3])
+sd(morley[,3])
+par(mfrow=c(1,2))
+hist(morley[,3])
+qqnorm(morley[,3])
+```
 
