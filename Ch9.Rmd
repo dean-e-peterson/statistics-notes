@@ -8,3 +8,60 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(comment = NA)
 ```
+
+"For a given **state space**, $S$, $X: \Omega \rightarrow S$, we will describe several of the most frequently encountered paremetereized families of ... random variables indexed by some parameter \theta."
+
+[Note that the actual R function names are prepended with `d`, `p`, `q`, or `r`.]
+
+## 9.1 Examples of Discrete Random Variables
+
+1. Bernoulli, $S = \{0,1\}$, `binom(size=1, ...`, outcome of a single Bernoulli trial.
+$$ 
+\begin{align*}
+f_X(x|p) &= 
+\begin{cases}
+0 & \text{with probability } (1-p) \\
+1 & \text{with probability } p
+\end{cases}
+\\
+&= p^x(1-p)^{1-x}
+\end{align*}
+$$
+
+2. Binomial, $S = \{0, 1, \dots , n\}$, `binom`, $x$ number of successes in $n$ Bernoulli trials.
+$$
+f_X(x|p) = { n \choose x } p^x(1-p)^{n-x}
+$$
+
+3. Geometric, $S=\mathbb{N}$, `geom`, $x$ number of failed Bernoulli trials before first success.
+$$
+f_X(x|p) = p(1-p)^x
+$$
+
+4. Negative binomial, $S=\mathbb{N}$, `nbinom`, $x$ number of failed Bernouilli trials before the $n$-the success.
+$$
+f_X(x|n,p) = {n + x - 1 \choose x} p^n(1-p)^x
+$$
+
+5. Poisson, $S=\mathbb{N}$, `pois`, approximates binomial when $n$ is large, $p$ is small, but product $\lambda=np$ is moderate in size.
+$$
+f_X(x|\lambda) = \frac{\lambda^x}{x!} e^{-\lambda}
+$$
+
+6. Uniform, $S= \{a, a+1, \dots, b\}$, `sample(..., replace=TRUE)` or `unif`, each value in the range has the same probability.
+$$
+f_X(x|a,b) = \frac1{b-a+1}
+$$
+
+7. Hypergeometric, `hyper`, for sampling without replacement (which is why the falling operation is used instead of powers)
+$$
+\begin{align*}
+f_X(x|m,n,k) 
+&= \frac{A_x}{\Omega} \\
+&= \frac{{m \choose x}{n \choose k-x}}{m+n \choose k} \\
+&= {k \choose x}\frac{(m)_x(n)_{k-x}}{(m+n)_k}
+\end{align*}
+$$
+
+## 9.2 Examples of Continous Random Variables
+
