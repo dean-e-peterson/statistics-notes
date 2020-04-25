@@ -15,6 +15,8 @@ knitr::opts_chunk$set(comment = NA)
 
 ## 9.1 Examples of Discrete Random Variables
 
+$$f_X(x|\theta) = P_\theta\{X = x\}$$
+
 1. Bernoulli, $S = \{0,1\}$, `binom(size=1, ...`, outcome of a single Bernoulli trial.
 $$ 
 \begin{align*}
@@ -48,7 +50,7 @@ $$
 f_X(x|\lambda) = \frac{\lambda^x}{x!} e^{-\lambda}
 $$
 
-6. Uniform, $S= \{a, a+1, \dots, b\}$, `sample(..., replace=TRUE)` or `unif`, each value in the range has the same probability.
+6. Uniform, $S= \{a, a+1, \dots, b\}$, `sample(..., replace=TRUE)`, each value in the range has the same probability.
 $$
 f_X(x|a,b) = \frac1{b-a+1}
 $$
@@ -65,3 +67,60 @@ $$
 
 ## 9.2 Examples of Continous Random Variables
 
+$$f_X(x|\theta) \approx \frac{P_\theta\{x < X \leq x + \Delta x\}}{\Delta x}$$
+
+1. Uniform, $S=[a,b]$, `unif`, 
+$$
+f_X(x|a,b) = \frac{1}{b-a}
+$$
+
+2. Exponential, $S=[0,\infty)$, `exp`, [### Add description?]
+$$
+f_X(x|\lambda) = \lambda e^{-\lambda x}
+$$
+
+3. Gamma, $S=[0,\infty)$, `gamma`, [### Add description?  Also, $\text{Exponential}(\lambda) \text{ is } \Gamma(1,\lambda)$] 
+$$
+\begin{align*}
+f(x|\alpha,\beta) &= \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} \\
+\Gamma(s) &= \int_0^\infty x^s e^{-x} \frac{dx}{x}
+\end{align*}
+$$
+
+4. Beta, $S=[0,1]$, `beta`, [### Add description?]
+$$
+f_X(x|\alpha,\beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}
+$$
+
+5. Normal, $S=\mathbb{R}$, `norm`, [### Add description?]
+$$
+f_X(x|\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}} exp \left(-\frac{(x-\mu)^2}{2\sigma^2} \right)
+$$
+
+6. Log-Normal, $S=(0,\infty)$, `lnorm`, "A log-normal random variable is the exponential of a normal random variable.  Thus, the logarithm of a log-normal random variable is normal.
+$$
+f_X(x|\mu,\sigma) = \frac{1}{x\sigma\sqrt{2\pi}} exp \left( - \frac{(\ln x - \mu)^2}{2\sigma^2} \right)
+$$
+
+7. Pareto, $S=(\alpha,\infty)$, `pareto` (after downloading `actuar` package).  "The Pareto distribution is used as a **power law distribution** used by a variety of disciplines.  Also, $\text{exponential}(X)$ has a $\text{Pareto}(1,\lambda)$ distribution.
+
+$$
+f_X(x|\alpha,\beta) = \frac{\beta\alpha^\beta}{x^{\beta+1}}
+$$
+
+8. Chi-Square, $S=[0,\infty)$, `chisq`, where $\nu$ is the **degrees of freedom**.  "If $Z_1, Z_2, \dots, Z_\nu$ are independent standard normal random variables, then $Z_1^2+Z_2^2+\cdots+Z_\nu^2$ has a $\chi_\nu^2$ distribution."
+$$
+f_X(x|\nu) = \frac{x^{\nu/2-1}}{2^{\nu/2} \Gamma(\nu/2)} e^{-x/2}
+$$
+
+9. Students t, $S=\mathbb{R}$, `t`, where $\nu$ is the **degrees of freedom** [### Add description?]
+$$
+f_X(x|\nu,\mu,\sigma) = \frac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)\sigma} \left(1 + \frac{(x - \mu)^2}{\nu\sigma^2} \right) ^{-(\nu+1)/2}
+$$
+
+10. Fisher's F, $S=[0, \infty)$, `f`, [### Add description?]
+$$
+f_X(x|\nu_1,\nu_2) = \frac{\Gamma((\nu_1+\nu_2)/2)\nu_1^{\nu_1/2}\nu_2^{\nu_2/2}}{\Gamma(\nu_1/2)\Gamma(\nu_2/2)} x^{\nu_1/2-1}(\nu_2+\nu_1x)^{-(\nu_1+\nu_2)/2}
+$$
+
+## 9.3 More on Mixtures
