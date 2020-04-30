@@ -60,7 +60,7 @@ $$
 \begin{align*}
 f_X(x|m,n,k) 
 &= \frac{A_x}{\Omega} \\
-&= \frac{{m \choose x}{n \choose k-x}}{m+n \choose k} \\
+&= \frac{ {m \choose x}{n \choose k-x}}{m+n \choose k} \\
 &= {k \choose x}\frac{(m)_x(n)_{k-x}}{(m+n)_k}
 \end{align*}
 $$
