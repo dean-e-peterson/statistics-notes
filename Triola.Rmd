@@ -60,4 +60,150 @@ sum(qsr[,"Wendy's"]) / sum(qsr) * (sum(qsr[,"Wendy's"])-1) / (sum(qsr) - 1) * (s
 
 ```
 
+### 4.3 Complements, Conditional Probability, and Bayes' Theorem
+
+5. Probability of 3 boys = $\frac12^3 = \frac18$.  Probability of the complement, at least one girl, = $\frac78$, or .875
+
+7. .982
+
+```{r}
+1 - .512^6
+```
+
+9. .344
+
+```{r}
+1 - .9^4
+```
+
+11. .965
+
+```{r}
+1 - .8^15
+```
+
+13. a. .628
+    b. .372
+    c. That if you give someone the right denomination to purchase something, they are more likely to do so compared to breaking a higher denomination.
+```{r}
+27 / (27 + 16)
+16 / (27 + 16)
+```
+
+17. .00173
+
+```{r}
+2/1155
+335/337
+```
+
+19. .994
+
+21. a. .9991
+    b. .999973
+
+```{r}
+1 - .03^2
+1 - .03^3
+```
+
+23. .490
+
+```{r}
+1 - (1-.126)^5
+```
+
+25. Birthday, 25 people, .569
+
+```{r}
+1 - prod((365 - 0:24) / 365)
+```
+
+### 4.4 Counting
+
+3. Permutations rule with repeated values?, because order matters
+   NOPE: Multiplication rule.
+   
+5. 1/10000, or .0001
+
+7. 684, nope 1/171
+
+```{r}
+factorial(19) / (factorial(17) * factorial(2))
+```
+
+9. 1/40320, or .0000248
+
+```{r}
+1 / factorial(8)
+```
+
+11. 1/254251200
+
+```{r}
+factorial(50) / factorial(50 - 5)
+```
+
+13. 1/100,000,000.  No
+
+```{r}
+100^4
+```
+
+15. 1/1820
+
+```{r}
+choose(16,4)
+factorial(16) / (factorial(16-4) * factorial(4))
+```
+
+17. 1/292,201,338
+
+```{r}
+choose(69, 5) * 26
+```
+
+19. 1/100,000
+
+21. 800, 6,400,000,000
+
+```{r}
+800 * 800 * 10000
+```
+
+23. a. 5040
+    b. 210
+    c. 1/5040, nope 1/210
+
+```{r}
+factorial(10)/factorial(10-4)
+factorial(10)/(factorial(10-4)*factorial(4))
+```
+
+25. 40,320, 1/40,320
+
+```{r}
+factorial(8)
+```
+
+27. 20,922,790,000,000, no 653,837,184,000, forgot repeat letters.
+
+
+```{r}
+factorial(16) / (2*2*2*2*2)
+```
+
+31. 62
+
+```{r}
+2^5 + 2^4 + 2^3 + 2^2 + 2^1
+```
+
+33. 4.7%.  Nope, 4.8% 
+
+```{r}
+(4/52) * (16/52) * 2
+```
+
+35. 
 
