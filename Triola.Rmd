@@ -1,0 +1,63 @@
+---
+title: "Triola"
+output: html_document
+---
+
+Notes from working through *Essentials of Statistics, 6th Ed.*, by Mario F. Triola
+
+```{r setup, comment=NA}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## Chapter 4 - Probability
+
+### Chapter 4-2 - Addition Rule and Multiplication Rule
+
+1. $P(A)$ is the probability that a randomly selected adult has blue eyes
+   $P(\bar A)$ is the probability that a randomly selected adult does not have blue eyes.
+   
+3. They are dependent, but can be considered independent for the purposes of calculations because the sample is (well) under 5% of the population.
+
+5. 74%
+
+7. $P(\bar N) = .670$, and represents surveyed adultswho do travel on commercial flights.
+
+9. 67.6%
+```{r}
+1 - ((329 + 33) / (329 + 264 + 249 + 145 + 33 + 54 + 31 + 13))
+```
+
+11. 906. No, they are not disjoint.
+```{r}
+qsr <- matrix(c(329, 33, 264, 54, 249, 31, 145, 13), nrow = 2)
+rownames(qsr) <- c("Order Accurate", "Order Inaccurate")
+colnames(qsr) <- c("McDonald's", "Burger King", "Wendy's", "Taco Bell")
+qsr
+(sum(qsr[1,]) + sum(qsr[,1]) - qsr[1,1]) / sum(qsr)
+```
+
+13. a) Yes, the events are independent, and the probability is .01997
+    b) No, the events are dependent, and the probability is 0.01986 
+
+```{r}
+(sum(qsr[, "Taco Bell"]) / sum(qsr))^2
+sum(qsr[, "Taco Bell"]) / sum(qsr) * (sum(qsr[, "Taco Bell"]) - 1) / (sum(qsr) - 1)
+```
+
+15. a) Yes, the events are independent, and the probability is .7794
+    b) No, the events are dependent, and the probability is .7793
+```{r}
+(sum(qsr["Order Accurate",]) / sum(qsr))^2
+sum(qsr["Order Accurate",]) / sum(qsr) * (sum(qsr["Order Accurate",]) - 1) / (sum(qsr) - 1)
+```
+
+19. .0156
+
+```{r}
+sum(qsr[,"Wendy's"]) / sum(qsr) * (sum(qsr[,"Wendy's"])-1) / (sum(qsr) - 1) * (sum(qsr[,"Wendy's"])-2) / (sum(qsr) - 2) 
+
+(factorial(sum(qsr[,"Wendy's"])) / factorial(sum(qsr[,"Wendy's"]) - 3)) / (factorial(sum(qsr)) / factorial(sum(qsr) - 3))
+
+```
+
+
