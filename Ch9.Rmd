@@ -87,6 +87,8 @@ f(x|\alpha,\beta) &= \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta 
 \end{align*}
 $$
 
+Note that $\Gamma(t+1) = t \Gamma(t)$ and, for non-negative integers, $\Gamma(n) = (n-1)!$
+
 4. Beta, $S=[0,1]$, `beta`, [### Add description?]
 $$
 f_X(x|\alpha,\beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}
@@ -124,3 +126,16 @@ f_X(x|\nu_1,\nu_2) = \frac{\Gamma((\nu_1+\nu_2)/2)\nu_1^{\nu_1/2}\nu_2^{\nu_2/2}
 $$
 
 ## 9.3 More on Mixtures
+
+"we use the fact that the gamma function is a generalization of the factorial function to all non-negative numbers."
+
+## 9.4 R Commands
+
+`dfamily(x, parameters)` - The mass function (discrete) or density function (continuous) of `family` evaluated at x.
+
+`pfamily(x, parameters)` - Returns $P\{X\leq x\}$ for the given distribution.
+
+`qfamily(p, parameters)` - Returns x satisfying $P\{X \leq x\} = p$, the p<sup>th</sup> quantile.
+
+`rfamily(n, parameters)` - Generates $n$ random variables having the given distribution.
+
