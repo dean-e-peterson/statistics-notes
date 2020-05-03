@@ -23,13 +23,13 @@ output: html_document
 
 ### Levels of Measurement
 
-**Nominal scale** - Unordered *categorical* data.  Example, favorite foods.  Sushi is not inherently less than or greater than pizza.
+**Nominal scale** - Unordered *categorical* data.  Example, favorite foods.  Sushi is not inherently less than or greater than pizza.  Think "name".
 
-**Ordinal scale** - Ordered *categorical* data.  You can put them in order, but the difference between values cannot be measured.  Example, "strongly agree", "agree", "disagree", "strongly disagree".
+**Ordinal scale** - Ordered *categorical* data.  You can put them in order, but the difference between values cannot be measured.  Example, "strongly agree", "agree", "disagree", "strongly disagree".  Think "order".
 
-**Interval scale** - Ordered *quantitative* data where differences can be measured, but ratios cannot be taken because there is no true 0 point.  Example, Fahrenheit scale, where the difference between 60 and 80 is 20, but where 80 is not four times as hot as 20.
+**Interval scale** - Ordered *quantitative* data where differences can be measured, but ratios cannot be taken because there is no true 0 point.  Example, Fahrenheit scale, where the difference between 60 and 80 is 20, but where 80 is not four times as hot as 20.  Think "subtraction".
 
-**Ratio scale** - Ordered *quantitative* data where differences and ratios can both be calculated.  Example, Kelvin scale or test scores counted from 0.
+**Ratio scale** - Ordered *quantitative* data where differences and ratios can both be calculated.  Example, Kelvin scale or test scores counted from 0.  Think "multiplication".
 
 ### Random Sampling
 "A sample should have the same characteristics as the population it is representing." - [OpenSTAX Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.
@@ -70,7 +70,12 @@ Note that relative frequency $\frac{n_x}{n}$ approaches probability $p(x)$ as sa
 | Correlation | $$ r(x,y) = \frac{1}{n-1} \sum_{i=1}^n\left(\frac{x_i-\bar{x}}{s_x}\right)\left(\frac{y_i-\bar{y}}{s_y}\right) = \frac{\text{cov}(x,y)}{s_xs_y} $$ | | |
 | Least squares linear regression| $$ \begin{align*} \hat y_i &= \hat\alpha + \hat\beta x_i\\ \hat\beta &= \frac{\text{cov}(x,y)}{\text{var}(x)} = \frac{rs_y}{s_x} \\ \hat\alpha &= \bar y - \hat\beta \bar x \end{align*} $$| $$ y_i = \alpha + \beta x_i + \epsilon_i $$ | |
 
+## Distributions
+
+Binomial, $\mu = np$, $\sigma ^2=np(1-p)$, $\sigma=\sqrt{np(1-p)}$
+
 ## Credits
 
 * [OpenSTAX Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.
 * [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) by Joseph C. Watkins
+* Essentials of Statistics, 6th Ed., by Mario F. Triola

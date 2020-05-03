@@ -207,3 +207,240 @@ factorial(16) / (2*2*2*2*2)
 
 35. 
 
+## 5. Discrete Probability Distributions
+
+### 5.1 Probability Distributions
+
+1. The number of girls born, integers 0 through 4 inclusive, and yes, its values are numerical.
+
+3. Yes, not counting rounding errors, they sum to 1.  It is a probability distribution because additionally all values are between 0 and 1 inclusive.
+
+5. a. Continuous random variable
+   b. Not a random variable
+   c. Discrete random variable
+   d. Continuous random variable
+   e. Discrete random variable?  (Assuming you consider shoe sizes numerical, not categorical)
+
+7. Yes, it's a probability distribution.  Mean = 2.5, sd = 1.246, nope, 1.1
+
+9. No, it's not a probability distribution because the probabilities don't sum to 1.
+
+11. Yes, it's a probability distribution.  Mean = 1.648 (1.6). sd=.744, nope .862 (.9)
+
+13. No, because there is no numerical random variable.
+
+15. Mean = 4.0 (3.996), Sd=1.4 (1.418)
+
+```{r}
+births <- 0:8
+prob <- c(.004, .031, .109, .219, .273, .219, .109, .031, .004)
+births
+sum(prob)
+girls <- data.frame(births, prob)
+mu = sum(girls$births * girls$prob)
+sd = (sum(girls$births^2 * girls$prob) - mu^2) ^ .5
+mu
+sd
+```
+
+17. No
+
+19. a. .109
+    b. .144
+    c. part b
+    d. No, because the probability of that many or more girls is .144, which is greater than .05.
+    
+```{r}
+sum(girls$prob[girls$births >= 6])
+```
+
+21. Mean = 1.5 (1.48), sd = 1.0 (1.019)
+
+```{r}
+sleep <- data.frame(x=0:5, p=c(.172, .363, .306, .129, .027, .002))
+mean = sum(sleep$x * sleep$p)
+mean
+sd = sum((sleep$x - mean)^2 * sleep$p)^.5
+sd
+mean + 2*sd
+sum(sleep$p[sleep$x <= 1])
+```
+
+23. No
+
+25. a. .363
+    b. .535
+    c. part b
+    d. No, because the probability of a result that or more extreme is (much) greater than .05.
+
+27. a. 1000
+    b. 1/1000
+    c. $499
+    d. .5
+    e. Neither
+
+```{r}
+-1 * .999 + 499 * .001
+```
+    
+29. a. -$161 vs $99839
+    b. -$21
+    c. Yes, because on average the consumer loses money.
+
+```{r}
+100000 - 161
+-161 * .9986 + (100000-161) * (1-.9986)
+```
+
+### 5.2 Binomial Probability Distributions
+
+1. It does not account for the possibility that the two customers that want drone deliveries could appear in any order withing the five people being considered.  Therefore, it underestimates the probability.
+
+3. No, they are dependent.  They can be treated as independent, though, because 30 out of 1009 is less than 5% for a sample size.  No, the probability cannot be found directly with the binomial probability formula, because that formula gives probablities for exactly x successes, not "at least" x successes.  NOPE, yes, you can use the formula, but must use it multiple times, basically for the reasons I stated.
+
+5. No, because the observed variable is not in the form of a simple success or failure.
+
+7. Yes, it's binomial.
+
+9. No, because without replacement, the events are not independent, and since the sample is larger than 5%, the events cannot be treated as independent.
+
+11. Yes, it's binomial.
+
+13. a. $\frac45 \cdot \frac45 \cdot \frac15 = \frac{16}{125}$
+    b. WWC, WCW, CWW, each with probability $\frac{16}{125}$
+    c. $\frac{48}{125}$
+    
+```{r}
+16/125
+48/125
+```
+
+$$P(x) = {n \choose x}p^x(1-p)^{n-x} = \frac{n!}{(n-x)!x!}p^x(1-p)^{n-x}$$
+
+15. .000002048 Nope, .0000819
+
+```{r}
+n <- 8
+x <- 7
+p <- .2
+(factorial(n)/(factorial(n-x)*factorial(x))) * p^x * (1-p)^(n-x)
+```
+
+17. .797
+```{r}
+pbinom(2, size=8, prob=.2)
+p <- .2
+n <- 8
+x <- 0
+a0 <- (factorial(n)/(factorial(n-x)*factorial(x))) * p^x * (1-p)^(n-x)
+x <- 1
+a1 <- (factorial(n)/(factorial(n-x)*factorial(x))) * p^x * (1-p)^(n-x)
+x <- 2
+a2 <- (factorial(n)/(factorial(n-x)*factorial(x))) * p^x * (1-p)^(n-x)
+a0 + a1 + a2
+```
+
+19. .168
+```{r}
+a0
+```
+
+21. .147
+
+```{r}
+n <- 8
+x <- 6
+p <- .54
+factorial(n)/(factorial(n-x)*factorial(x))
+choose(n, x) * p^x * (1-p)^(n-x)
+```
+
+23. .089
+
+```{r}
+1 - pbinom(7, size=10, prob=.54)
+```
+
+25. .00000451
+
+```{r}
+x <- 90
+n <- 7
+p <- .27
+choose(x, n) * p^n * (1-p)^(x-n)
+pbinom(7, size=90, prob=.27)
+```
+
+27. a. .00154
+    b. .000064
+    c. .0016
+    d. Yes, its probability is less than .05
+
+```{r}
+factorial(6) / (factorial(1) * factorial(5)) * .2^5 * .8^1
+factorial(6) / (factorial(0) * factorial(6)) * .2^6
+.001536 + .000064
+1  - pbinom(4, size=6, prob=.2)
+```
+
+29. a. mean=18, sd=3
+    b. 12 and 24
+    c. No, it is significantly low, and suggests the treatment had the opposite effect.  NOPE, yes.
+
+```{r}
+xsort.var <- 36 * .5 * .5
+xsort.var^.5
+```
+
+31. a. mean = 7.5, sd = 1.9 NOPE, sd is 1.4
+    b. 3.8 and 11.3 NOPE, 4.8 and 10.2
+    c. No, 9 is not significantly high because it is within 2 sd of the mean.
+
+```{r}
+n <- 10
+p <- .75
+n*p
+(n*p*(1-p))^.5
+n*p - 2*(n*p*(1-p))^.5
+n*p + 2*(n*p*(1-p))^.5
+```
+
+33. .304. No.
+
+```{r}
+p <- .01
+n <- 36
+1 - (1-p)^36
+1 - pbinom(0, size=n, prob=p)
+1 - (factorial(36)/(factorial(36) * factorial(0)) * .01^0 * .99^36)
+
+
+```
+
+35. .338, many will be rejected.  NOPE, .662
+
+```{r}
+n <- 40
+p <- .03
+x = 1
+1 - pbinom(x, size=n, prob=p)
+```
+
+37. a. 8.7 and 23.3.  No
+    b. .0736
+    c. .242
+    d. part c, No, because the probability is greater than .05
+    e. No reason to doubt.
+
+```{r}
+p <- .16
+n <- 100
+mm.mean <- n * p
+mm.sd <- (n * p * (1-p))^.5
+mm.mean + 2*mm.sd
+mm.mean - 2*mm.sd
+dbinom(19, size=n, prob=p)
+1 - pbinom(18, size=n, prob=p)
+```
+
+
