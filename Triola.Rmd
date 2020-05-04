@@ -443,4 +443,239 @@ dbinom(19, size=n, prob=p)
 1 - pbinom(18, size=n, prob=p)
 ```
 
+39. a. Yes
+    b. .0000369
+    c. .0000987, NOPE .000136
+    d. part c, yes
+    e. They appear to be inaccurate.
 
+```{r}
+n <- 611
+p <- .43
+pres.mean <- n * p
+pres.mean
+pres.sd <- (n * p * (1-p))^.5
+pres.mean - 2*pres.sd
+pres.mean + 2*pres.sd
+x <- 308
+choose(n, x) * p^x * (1-p)^(n-x)
+1 - pbinom(x - 1, size=n, prob=.43)
+```
+
+41. .0468
+
+```{r}
+(1-.06)^4 * .06
+```
+
+43.
+
+```{r}
+
+```
+
+### 5.3 Poisson Probability Distributions
+
+1. $\mu=\frac{535}{576} = .929$,
+   $x = 2$,
+   $e = 2.718$
+   
+   mu is the average number of buzz bombs per region
+   x is the number of buzz bombs hitting a region that we are looking for the probability of.
+   e is Euler's constant, deal with it.
+
+```{r}
+mu <- 535/576
+x <- 2
+e <- exp(1)
+mu
+x
+e
+```
+
+3. x is a discrete random variable whic can take on integer values from 0 to infinity.  x=2.3 is not possible.
+
+5. a. .158
+   b. 8.682
+   c. Compares well.  Yes.
+
+```{r}
+6.1^5 * exp(-6.1) / factorial(5)
+55 * (6.1^5 * exp(-6.1) / factorial(5))
+```
+
+7. a. .140
+   b. 7.7
+   c. Compares well. Yes.
+
+```{r}
+6.1^7 * exp(-6.1) / factorial(7)
+55 * (6.1^7 * exp(-6.1) / factorial(7))
+```
+
+9. .0643
+
+```{r}
+mu <- 4221 / 365
+mu
+x <- 15
+mu^x * exp(-mu) / factorial(x)
+```
+
+11. I don't think half-life is Poisson, but...
+    a. 62.2
+    b. .0155
+
+```{r}
+mu <- 22713/365
+mu
+mu^50 * exp(-mu) / factorial(50)
+```
+
+13. a. .170
+    b. 98.1
+    c. Pretty close
+
+```{r}
+mu <- 535 / 576
+mu
+mu^2 * exp(-mu) / factorial(2)
+576 * mu^2 * exp(-mu) / factorial(2)
+```
+
+15. .9999877
+
+```{r}
+(mu <- 33561 / 2969)
+1 - (mu^0 * exp(-mu) / factorial(0))
+```
+
+17. .0000180  NOPE .0000178, rounding?
+
+```{r}
+n <- 5200
+(p <- 1/292201338)
+(mu <- n * p)
+x <- 0
+
+1 - (mu^x * exp(-mu) / factorial(x))
+```
+
+## 6. Normal Probability Distributions
+
+### 6.1 The Standard Normal Distribution
+
+1. That's not what normal distribution means.  Those numbers are more likely in a uniform distribution.
+
+3. mean of zero, standard deviation of 1
+
+5. .4
+
+7. .2
+
+9. .6700
+
+11. .6993
+
+13. 1.23
+
+15. -1.45
+
+17. .1093
+
+19. .8997
+
+21. .4013
+
+23. .9772
+
+25. .0214
+
+27. .0174
+
+29. .9545
+
+31. .8413
+
+33. .9999973
+
+35. .5000
+
+37. 2.33
+
+```{r}
+qnorm(.99)
+```
+
+39. -2.05 and 2.05
+
+```{r}
+qnorm(.02)
+qnorm(1 - .02)
+```
+
+41. .8159 NOPE 1.28
+
+```{r}
+qnorm(1-.1)
+qnorm(1 - .04)
+```
+
+43. .8315 NOPE 1.75
+
+45. 68.3%
+
+```{r}
+pnorm(1) - pnorm(-1)
+```
+
+47. 99.73%
+```{r}
+pnorm(3) - pnorm(-3)
+```
+
+49. a. 2.275%
+    b. 2.275%
+    c. 95.45%
+    
+
+```{r}
+1 - pnorm(2)
+pnorm(-2)
+pnorm(2) - pnorm(-2)
+```
+
+### 6.2 Real Applications of Normal Distributions
+
+1. a. mean 0, sd 1
+   b. unitless
+   
+3. A standard normal distribution has a mean of 0 and a standard deviation of 1.  Any other values for mean and standard deviation make a non-standard normal distribution.
+
+5. .8849
+
+7. .9053
+
+9. 135.998
+
+11. 69.26
+
+13. .0115
+
+15. .6612
+
+17. 24.91
+
+19. 20.9 to 26.1 inches.  No
+
+21. a. 72.11%, too short.
+    b. 58.25" to 69.15"
+    
+
+
+35. a. mean=75, sd=12
+    b. No?
+    c. 66 to 75
+    d. ?
+
+23. 

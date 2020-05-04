@@ -74,6 +74,8 @@ Note that relative frequency $\frac{n_x}{n}$ approaches probability $p(x)$ as sa
 
 Binomial, $\mu = np$, $\sigma ^2=np(1-p)$, $\sigma=\sqrt{np(1-p)}$
 
+Poisson, $$P(x) = \frac{\mu^x \cdot e^{-\mu}}{x!}$$, $\sigma=\sqrt{\mu}$
+
 ## Credits
 
 * [OpenSTAX Introductory Statistics](https://openstax.org/details/books/introductory-statistics) book, by Barbara Illowsky and Susan Dean.
