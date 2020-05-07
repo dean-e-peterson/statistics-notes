@@ -5,7 +5,7 @@ output: html_document
 
 Notes from working through *Essentials of Statistics, 6th Ed.*, by Mario F. Triola
 
-```{r setup, comment=NA}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(comment = NA)
 ```
 
@@ -671,6 +671,26 @@ pnorm(2) - pnorm(-2)
 21. a. 72.11%, too short.
     b. 58.25" to 69.15"
     
+23. a. .92%, which suggests that most Mickey Mouses are women.
+    b. 64.0 - 68.6 inches.
+
+```{r}
+m.mean <- 68.6
+m.sd <- 2.8
+pnorm((62 - m.mean) / m.sd) - pnorm((56 - m.mean) / m.sd)
+```
+```{r}
+qnorm(1 - .5) * m.sd + m.mean
+qnorm(.05) * m.sd + m.mean
+
+```
+
+25. .201, no
+
+```{r}
+1 - pnorm((230 - 184) / 55)
+
+```
 
 
 35. a. mean=75, sd=12
@@ -678,4 +698,73 @@ pnorm(2) - pnorm(-2)
     c. 66 to 75
     d. ?
 
-23. 
+### 6.3 Sampling Distributions and Estimators 
+
+1. a. They will be .512, they will target the population mean
+   b. It will be a normal distribution (APPROXIMATELY)
+
+3. Unbiased estimators: sample mean, sample proportion, sample variance.
+
+5. No, because it is an estimator of a more specific population, that of boys born in China.
+
+7. a. Population variance $\sigma^2=4.667$
+   c. Mean of sampling distribution of sample variances $s^2=4.667$
+   d. Yes, the sample variance is an unbiased estimator of the population variance, because the mean of the sample variance converges on the population variance as you construct the entire sampling distribution.
+
+```{r}
+kids <- c(4,5,9)
+kids.mu <- sum(kids) / length(kids)
+kids.popvar <- sum((kids - kids.mu)^2) / length(kids)
+kids.popvar
+
+samp <- data.frame(a = c(4,4,4,5,5,5,9,9,9), 
+                   b = c(4,5,9,4,5,9,4,5,9))
+samp$mean <- (samp$a + samp$b) / 2
+samp$var <- ((samp$a - samp$mean)^2 + (samp$b - samp$mean)^2) / 1
+samp
+sum(samp$var) / length(samp$var)
+```
+
+9. a. 5
+   c. 6
+   d. No, it's biased
+
+```{r}
+median(kids)
+# Only two values in each sample, so
+samp$median <- samp$mean
+samp$median
+sum(samp$median) / length(samp$median)
+```
+
+### 6.4 The Central Limit Theorem
+
+1. If they know that the original population of grade-point averages has a normal distribution, or if the sample size that she took is greater than 30.
+
+3. $\mu_\bar x$ is the mean of the sampling distribution means.
+   $\sigma_\bar x$ is the standard deviation of the sampling distribution means.
+
+```{r}
+pnorm(80, mean=74, sd=12.5)
+pnorm(80, mean=74, sd=12.5/(16^.5))
+```
+
+5. a. .6844
+   b. .9726
+   c. Because we assumed that the original population of females that the sample was drawn from had pulse rates that are normally distributed.
+   
+```{r}
+pnorm(76, mean=74.0, sd=12.5) - pnorm(72, mean=74.0, sd=12.5)
+pnorm(76, mean=74.0, sd=12.5/2) - pnorm(72, mean=74.0, sd=12.5/2)
+```
+
+7. a. 0.1271
+   b. 0.2510
+   c. ditto 5c.
+   
+```{r}
+
+```
+   
+
+

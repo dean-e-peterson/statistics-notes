@@ -1,0 +1,112 @@
+---
+title: "Simulations"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## Sampling from a non-normal distribution
+
+Generate an artificial, very non-normal, population of size $N$
+```{r}
+N <- 10000
+pop <- sort(c(runif(N*3/4, min=0, max=5), runif(N*1/4, min=95, max=100)))
+hist(pop, ylim=c(0, N))
+
+# Calculate the mean of the population
+mean(pop)
+mean(c(2.5,2.5,2.5,97.5))
+```
+
+Now, let's define a function to take samples.
+
+```{r}
+# Define a function that takes a bunch of samples of size n
+# and returns the means of all the samples.
+get_means <- function(count, n) {
+  # Sample means
+  samp.means <- numeric(count)
+  for (i in 1:count) {
+    (samp <- sample(pop, n))
+    samp.means[i] <- mean(samp)
+  }
+  return(samp.means)
+}
+
+# Number of samples to take
+count <- 100
+```
+
+And try different sample sizes.
+
+```{r}
+n <- 2 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 3 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 5 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 10 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 20 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 30 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 50 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 100 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 200 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
+
+```{r}
+n <- 500 # Sample size
+means <- get_means(count, n)
+mean(means)
+hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
+```
