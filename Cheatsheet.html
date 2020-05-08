@@ -470,8 +470,70 @@ summary {
 </div>
 <div id="distributions" class="section level2">
 <h2>Distributions</h2>
-<p>Binomial, <span class="math inline">\(\mu = np\)</span>, <span class="math inline">\(\sigma ^2=np(1-p)\)</span>, <span class="math inline">\(\sigma=\sqrt{np(1-p)}\)</span></p>
-<p>Poisson, <span class="math display">\[P(x) = \frac{\mu^x \cdot e^{-\mu}}{x!}\]</span>, <span class="math inline">\(\sigma=\sqrt{\mu}\)</span></p>
+<p>See also <a href="https://www.math.arizona.edu/~jwatkins/statbook.pdf">An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition</a> Chapter 9</p>
+<table style="width:100%;">
+<colgroup>
+<col width="14%"></col>
+<col width="14%"></col>
+<col width="14%"></col>
+<col width="14%"></col>
+<col width="14%"></col>
+<col width="14%"></col>
+<col width="14%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>State Space</th>
+<th>Mass/Density Formula</th>
+<th>R family</th>
+<th>Mean</th>
+<th>Variance</th>
+<th>Standard Deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bernoulli</td>
+<td><span class="math inline">\(S = \{0,1\}\)</span></td>
+<td><span class="math display">\[ 
+\begin{align*}
+f_X(x|p) &amp;= 
+\begin{cases}
+0 &amp; \text{with probability } (1-p) \\
+1 &amp; \text{with probability } p
+\end{cases}
+\\
+&amp;= p^x(1-p)^{1-x}
+\end{align*}
+\]</span></td>
+<td><code>binom(size=1, ...</code></td>
+<td><span class="math inline">\(\mu = p\)</span></td>
+<td><span class="math inline">\(\sigma = p(1-p)\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Binomial</td>
+<td><span class="math inline">\(S = \{0, 1, \dots , n\}\)</span></td>
+<td><span class="math display">\[
+f_X(x|p) = { n \choose x } p^x(1-p)^{n-x}
+\]</span></td>
+<td><code>binom</code></td>
+<td><span class="math inline">\(\mu = np\)</span></td>
+<td><span class="math inline">\(\sigma ^2=np(1-p)\)</span></td>
+<td><span class="math inline">\(\sigma=\sqrt{np(1-p)}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Poisson</td>
+<td></td>
+<td><span class="math display">\[P(x) = \frac{\mu^x \cdot e^{-\mu}}{x!}\]</span></td>
+<td><code>pois</code></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(\sigma=\sqrt{\mu}\)</span></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="credits" class="section level2">
 <h2>Credits</h2>

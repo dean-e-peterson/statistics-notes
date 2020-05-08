@@ -72,9 +72,25 @@ Note that relative frequency $\frac{n_x}{n}$ approaches probability $p(x)$ as sa
 
 ## Distributions
 
-Binomial, $\mu = np$, $\sigma ^2=np(1-p)$, $\sigma=\sqrt{np(1-p)}$
+See also [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) Chapter 9
 
-Poisson, $$P(x) = \frac{\mu^x \cdot e^{-\mu}}{x!}$$, $\sigma=\sqrt{\mu}$
+| Name | State Space | Mass/Density Formula | R family | Mean | Variance | Standard Deviation |
+| --- | --- | --- | --- | --- | --- | --- |
+| Bernoulli | $S = \{0,1\}$ | $$ 
+\begin{align*}
+f_X(x|p) &= 
+\begin{cases}
+0 & \text{with probability } (1-p) \\
+1 & \text{with probability } p
+\end{cases}
+\\
+&= p^x(1-p)^{1-x}
+\end{align*}
+$$ | `binom(size=1, ...` | $\mu = p$ | $\sigma = p(1-p)$ | |
+| Binomial | $S = \{0, 1, \dots , n\}$ | $$
+f_X(x|p) = { n \choose x } p^x(1-p)^{n-x}
+$$ | `binom` | $\mu = np$ | $\sigma ^2=np(1-p)$ | $\sigma=\sqrt{np(1-p)}$ |
+| Poisson |  | $$P(x) = \frac{\mu^x \cdot e^{-\mu}}{x!}$$ | `pois` | | | $\sigma=\sqrt{\mu}$ |
 
 ## Credits
 
