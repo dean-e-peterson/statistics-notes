@@ -763,8 +763,213 @@ pnorm(76, mean=74.0, sd=12.5/2) - pnorm(72, mean=74.0, sd=12.5/2)
    c. ditto 5c.
    
 ```{r}
-
+1 - pnorm(185, mean=189, sd=39/(27^.5))
 ```
    
+9. .2970, NOPE, .7030, Not if 27 adult males really fit in that elevator.
 
+```{r}
+qnorm((1-.02), mean=100, sd=15)
+1 - pnorm(131, mean=100, sd=15/2)
+```
+
+11. a. 130.8
+    b. .00001788
+    c. No.
+    
+```{r}
+3500/25
+pnorm(140, mean=189, sd=39/5)
+1 - pnorm(140, mean=189, sd=39/5)
+1 - pnorm(175, mean=189, sd=39/(20^.5))
+```
+
+13. a. 140 pounds
+    b. 1 (.9999999998..., etc)
+    c. .9458
+    d. No.
+    
+```{r}
+1 - pnorm(17, mean=14.4, sd=1)
+1 - pnorm(17, mean=14.4, sd=1/(122^.5))
+```
+
+15. a. .004661
+    b. 0
+    c. part a
+
+```{r}
+pnorm(211, mean=171, sd=46) - pnorm(140, mean=171, sd=46)
+pnorm(211, mean=171, sd=46/5) - pnorm(140, mean=171, sd=46/5)
+```
+
+17. a. .5575
+    b. .9996
+    c. part a.  You only eject 1 person at a time.
+
+```{r}
+pnorm(72, mean=68.6, sd=2.8)
+pnorm(72, mean=68.6, sd=2.8/10)
+```
+    
+19. a. .8877
+    b. 1.
+    c. part a
+    d. Because they are on average shorter than men?
+
+```{r}
+x <- (16/(50^.5)) * (275-50)^.5/(275-1)^.5
+x
+pnorm(105, mean=95.5, sd=x) - pnorm(95, mean=95.5, sd=x)
+```
+
+    
+21. a. Yes, because the sample size is greater than 5% of the population.  The correct $\sigma_\bar x$ is 2.0505
+    b. 0.5963
+    
+### 6.5 Assessing Normality
+
+1. The histogram should have a symmetric bell shape.  The normal quantile plot would have the points close to a straight line, with no additional pattern.
+
+3. The original population would have to be normally distributed.  You could use a histogram, look for outliers, and use a normal quantile plot.
+
+5. Yes, normal
+
+7. Non-normal.  There is a pattern in addition to a straight line.
+
+9. Normal?
+```{r}
+cookies <- read.table("data\\Triola\\28 - Chocolate Chip Cookies.txt", header=T, sep="\t")
+par(mfrow=c(1,2))
+hist(cookies$CHIPS.AHOY.RED.FAT)
+qqnorm(cookies$CHIPS.AHOY.RED.FAT)
+
+```
+
+11. Non-normal
+
+```{r}
+garbage <- read.table("data/Triola/31 - Garbage Weight.txt", header=T, sep="\t")
+garbage$YARD
+par(mfrow=c(1,2))
+hist(garbage$YARD)
+qqnorm(garbage$YARD, datax = T)
+```
+
+13. Normal
+
+```{r}
+par(mfcol=c(1,2))
+hist(cookies$CHIPS.AHOY.RED.FAT)
+qqnorm(cookies$CHIPS.AHOY.RED.FAT, datax=TRUE)
+```
+
+15. Non-normal
+
+17. 40.7 44.3 34.2 32.5 38.5  Sample to make a graph manually from
+
+19. 1027, 1029, 1034, 1070, 1079, 1079, 963, 1439
+
+21. a. Adding leaves heights normally distributed.
+    b. Multiplying leaves heights normally distributed.
+    c. Logarithms of heights look slightly different, but still normally distributed.  NOPE, supposed to say NO.
+    
+
+```{r}
+body <- read.table("data/Triola/01 - Body Data.txt", header=T, sep="\t")
+height <- body[body[,2] == 1,]$HEIGHT
+par(mfrow=c(1,2))
+hist(height)
+qqnorm(height, datax=T)
+
+hist(height + 5)
+qqnorm(height + 5, datax=T)
+
+hist(height/2.5)
+qqnorm(height/2.5, datax=T)
+
+hist(log(height))
+qqnorm(log(height), datax=T)
+
+hist(log10(height))
+qqnorm(log10(height), datax=T)
+```
+
+### 6.6 Normal as Approximation to Binomial
+
+1. a. <= 502.5
+   b. 501.5 <= p <= 502.5
+   c. >= 502.5
+
+3. p=.2, q=.8, $\mu=20$, $\sigma=4$,
+   $\mu$ measures the mean, the expected, number of correct answers.
+   $\sigma$ measures the variation in the number of correct answers.
+
+```{r}
+(.2 * .8 * 100)^.5
+```
+
+5. np and nq are big enough.
+   .1102
+
+```{r}
+pnorm(7.5, mean=20*.512, sd=(20*.512*(1-.512))^.5)
+pbinom(7, size=20, prob=.512)
+```
+
+7. np is < 5, so a normal approximation should not be used.
+
+```{r}
+20 * .2
+```
+
+9. .2028
+
+```{r}
+pnorm(19.5, mean=100*.23, sd=(100*.23*(1-.23))^.5)
+pbinom(19, size=100, prob=.23)
+```
+
+11. .05487, because it is the probability for that exact number of cars, not that number or higher.
+
+```{r}
+mu <- 100 * .10
+sigma <- (100 * .10 * .9)^.5
+pnorm(14.5, mean=mu, sd=sigma) - pnorm(13.5, mean=mu, sd=sigma)
+dbinom(14, size=100, prob=.10)
+```
+
+13. a. .02117
+    b. .2012, no, it's not less than 5%
+
+```{r}
+mu <- 879 * .25
+sigma <- sqrt(879 * .25 * .75)
+pnorm(231.5, mean=mu, sd=sigma) - pnorm(230.5, mean=mu, sd=sigma)
+dbinom(231, size=879, prob=.25)
+1 - pnorm(230.5, mean=mu, sd=sigma)
+1 - pbinom(230, size=879, prob=.25)
+```
+
+15. a. .01138
+    b. Yes, it is significantly low.
+
+```{r}
+n <- 250
+p <- .51
+pnorm(109.5, mean=n*p, sd=sqrt(n*p*(1-p)))
+pbinom(109, size=n, prob=p)
+```
+
+
+21. ?, .170, .172
+
+```{r}
+n <- 11
+p <- .512
+mu <- n * p
+sigma <- sqrt(n * p * (1-p))
+pnorm(7.5, mean=mu, sd=sigma) - pnorm(6.5, mean=mu, sd=sigma)
+dbinom(7, size=n, prob=p)
+```
 
