@@ -524,13 +524,59 @@ f_X(x|p) = { n \choose x } p^x(1-p)^{n-x}
 <td><span class="math inline">\(\sigma=\sqrt{np(1-p)}\)</span></td>
 </tr>
 <tr class="odd">
+<td>Geometric</td>
+<td><span class="math inline">\(S=\mathbb{N}\)</span></td>
+<td><span class="math display">\[
+f_X(x|p) = p(1-p)^x
+\]</span></td>
+<td><code>geom</code></td>
+<td><span class="math inline">\(\mu=\frac{1-p}{p}\)</span></td>
+<td><span class="math inline">\(\sigma^2=\frac{1-p}{p^2}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
 <td>Poisson</td>
-<td></td>
-<td><span class="math display">\[P(x) = \frac{\mu^x \cdot e^{-\mu}}{x!}\]</span></td>
+<td><span class="math inline">\(S=\mathbb{N}\)</span></td>
+<td><span class="math display">\[
+f_X(x|\lambda) = \frac{\lambda^x}{x!} e^{-\lambda}
+\]</span></td>
 <td><code>pois</code></td>
+<td><span class="math inline">\(\mu=\lambda\)</span></td>
+<td><span class="math inline">\(\sigma^2=\lambda\)</span></td>
+<td><span class="math inline">\(\sigma=\sqrt{\lambda}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Uniform (discrete)</td>
+<td><span class="math inline">\(S= \{a, a+1, \dots, b\}\)</span></td>
+<td><span class="math display">\[
+f_X(x|a,b) = \frac1{b-a+1}
+\]</span></td>
+<td><code>sample(..., replace=TRUE)</code></td>
+<td><span class="math inline">\(\mu=\frac{b-a+1}{2}\)</span></td>
+<td><span class="math inline">\(\sigma^2=\frac{(b-a+1)^2-1}{12}\)</span></td>
 <td></td>
+</tr>
+<tr class="even">
+<td>Uniform (continuous)</td>
+<td><span class="math inline">\(S=[a,b]\)</span></td>
+<td><span class="math display">\[
+f_X(x|a,b) = \frac{1}{b-a}
+\]</span></td>
+<td><code>unif</code></td>
+<td><span class="math inline">\(\mu=\frac{a+b}{2}\)</span></td>
+<td><span class="math inline">\(\sigma^2=\frac{(b-a)^2}{12}\)</span></td>
 <td></td>
-<td><span class="math inline">\(\sigma=\sqrt{\mu}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Normal</td>
+<td><span class="math inline">\(S=\mathbb{R}\)</span></td>
+<td><span class="math display">\[
+f_X(x|\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}} exp \left(-\frac{(x-\mu)^2}{2\sigma^2} \right)
+\]</span></td>
+<td><code>norm</code></td>
+<td><span class="math inline">\(\mu=\mu\)</span></td>
+<td><span class="math inline">\(\sigma^2=\sigma^2\)</span></td>
+<td></td>
 </tr>
 </tbody>
 </table>
