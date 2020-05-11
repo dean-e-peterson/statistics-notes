@@ -470,6 +470,10 @@ summary {
 </div>
 <div id="distributions" class="section level2">
 <h2>Distributions</h2>
+<p>Some of these are defined using a gamma function. Note that <span class="math inline">\(\Gamma(t+1) = t \Gamma(t)\)</span> and, for non-negative integers, <span class="math inline">\(\Gamma(n) = (n-1)!\)</span> <span class="math display">\[
+\Gamma(s) = \int_0^\infty x^s e^{-x} \frac{dx}{x}
+\]</span></p>
+<p>The <span class="math inline">\(\nu\)</span> used in some of these is also known as the <strong>degrees of freedom</strong>.</p>
 <p>See also <a href="https://www.math.arizona.edu/~jwatkins/statbook.pdf">An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition</a> Chapter 9</p>
 <table style="width:100%;">
 <colgroup>
@@ -576,6 +580,49 @@ f_X(x|\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}} exp \left(-\frac{(x-\mu)^2}{2\si
 <td><code>norm</code></td>
 <td><span class="math inline">\(\mu=\mu\)</span></td>
 <td><span class="math inline">\(\sigma^2=\sigma^2\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Exponential</td>
+<td><span class="math inline">\(S=[0,\infty)\)</span></td>
+<td><span class="math display">\[
+f_X(x|\lambda) = \lambda e^{-\lambda x}
+\]</span></td>
+<td><code>exp</code></td>
+<td><span class="math inline">\(\mu=\frac{1}{\lambda}\)</span></td>
+<td><span class="math inline">\(\sigma=\frac{1}{\lambda^2}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Gamma</td>
+<td><span class="math inline">\(S=[0,\infty)\)</span></td>
+<td><span class="math display">\[
+f(x|\alpha,\beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} \]</span></td>
+<td><code>gamma</code></td>
+<td><span class="math inline">\(\mu = \frac{\alpha}{\beta}\)</span></td>
+<td><span class="math inline">\(\sigma^2=\frac{\alpha}{\beta^2}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Chi-Square</td>
+<td><span class="math inline">\(S=[0,\infty)\)</span></td>
+<td><span class="math display">\[
+f_X(x|\nu) = \frac{x^{\nu/2-1}}{2^{\nu/2} \Gamma(\nu/2)} e^{-x/2}
+\]</span></td>
+<td><code>chisq</code></td>
+<td><span class="math inline">\(\mu=\nu\)</span></td>
+<td><span class="math inline">\(\sigma^2=2\nu\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Students t</td>
+<td><span class="math inline">\(S=\mathbb{R}\)</span></td>
+<td><span class="math display">\[
+f_X(x|\nu,\mu,\sigma) = \frac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)\sigma} \left(1 + \frac{(x - \mu)^2}{\nu\sigma^2} \right) ^{-(\nu+1)/2}
+\]</span></td>
+<td><code>t</code></td>
+<td><span class="math inline">\(\mu=a, (\nu&gt;1)\)</span></td>
+<td><span class="math inline">\(\sigma^2 = \sigma^2 \frac{a}{a-2}, (\nu &gt; 2)\)</span></td>
 <td></td>
 </tr>
 </tbody>

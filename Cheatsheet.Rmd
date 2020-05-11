@@ -72,6 +72,13 @@ Note that relative frequency $\frac{n_x}{n}$ approaches probability $p(x)$ as sa
 
 ## Distributions
 
+Some of these are defined using a gamma function.  Note that $\Gamma(t+1) = t \Gamma(t)$ and, for non-negative integers, $\Gamma(n) = (n-1)!$
+$$
+\Gamma(s) = \int_0^\infty x^s e^{-x} \frac{dx}{x}
+$$
+
+The $\nu$ used in some of these is also known as the **degrees of freedom**.
+
 See also [An Introduction to the Science of Statistics: From Theory to Implementation, Preliminary Edition](https://www.math.arizona.edu/~jwatkins/statbook.pdf) Chapter 9
 
 | Name | State Space | Mass/Density Formula | R family | Mean | Variance | Standard Deviation |
@@ -105,6 +112,17 @@ $$ | `unif` | $\mu=\frac{a+b}{2}$ | $\sigma^2=\frac{(b-a)^2}{12}$ |
 | Normal | $S=\mathbb{R}$ | $$
 f_X(x|\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}} exp \left(-\frac{(x-\mu)^2}{2\sigma^2} \right)
 $$ | `norm` | $\mu=\mu$ | $\sigma^2=\sigma^2$ |
+| Exponential | $S=[0,\infty)$ | $$
+f_X(x|\lambda) = \lambda e^{-\lambda x}
+$$ | `exp` | $\mu=\frac{1}{\lambda}$ | $\sigma=\frac{1}{\lambda^2}$ |
+| Gamma | $S=[0,\infty)$ | $$
+f(x|\alpha,\beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} $$ | `gamma` | $\mu = \frac{\alpha}{\beta}$ | $\sigma^2=\frac{\alpha}{\beta^2}$ |
+| Chi-Square | $S=[0,\infty)$ | $$
+f_X(x|\nu) = \frac{x^{\nu/2-1}}{2^{\nu/2} \Gamma(\nu/2)} e^{-x/2}
+$$ | `chisq` | $\mu=\nu$ | $\sigma^2=2\nu$ |
+| Students t | $S=\mathbb{R}$ | $$
+f_X(x|\nu,\mu,\sigma) = \frac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)\sigma} \left(1 + \frac{(x - \mu)^2}{\nu\sigma^2} \right) ^{-(\nu+1)/2}
+$$ | `t` | $\mu=a, (\nu>1)$ | $\sigma^2 = \sigma^2 \frac{a}{a-2}, (\nu > 2)$ |
 
 ## Credits
 
