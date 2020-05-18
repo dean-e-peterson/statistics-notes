@@ -973,3 +973,340 @@ pnorm(7.5, mean=mu, sd=sigma) - pnorm(6.5, mean=mu, sd=sigma)
 dbinom(7, size=n, prob=p)
 ```
 
+## 7. Estimating Parameters and Determining Sample Sizes
+
+### 7.1 Estimating a Population Proportion
+
+1. Confidence level
+
+3. $\hat p$ is sample proportion whose favorite pie was chocolate
+   $\hat q$ is sample proportion whose favorite pie was NOT chocolate
+   $n$ is the sample size
+   $E$ is the margin of error
+   $p$ is the true population proportion whose favorite is chocolate.
+   $\alpha$ is .95. NOPE .05
+
+5. 1.645
+7. 2.807
+9. $.1302 \pm .0868$
+11. $.07995 - .06305 < p < .07995 + .06305$ Nope $0.0169 < p < 0.143$
+13. a. .0912
+    b. .0297
+    c. .0912 += .0297
+    d. We are confident that 95% of the time, the confidence interval contains the true proportion.
+
+```{r}
+phat <- 33/362
+phat
+qnorm(.975) * sqrt(phat * (1-phat)/362)
+
+```
+
+15. a. .143
+    b. .00815
+    c. .135 < p < .152
+    d. We are confident that 90% of the time, the true proportion p will be between .135 and .152
+
+```{r}
+phat <- 717 / 5000
+phat
+e <- qnorm(.95) * sqrt(phat*(1-phat)/5000)
+e
+phat + e
+phat - e
+```
+
+17. .462 < p < .529.  No.
+
+```{r}
+n <- 860
+phat <- 426 / n
+phat
+e <- qnorm(.975) * sqrt(phat*(1-phat)/n)
+e
+phat - e
+phat + e
+```
+
+19. 11.6% < p < 22.4%.  That it is possible that either restaurant could have more inaccurate orders based on 99% confidence levels.
+
+```{r}
+n <- 264 + 54
+phat <- 54 / n
+phat
+e <- qnorm(.995) * sqrt(phat * (1-phat) / n)
+e
+(phat - e) * 100
+(phat + e) * 100
+```
+
+21. a. .5
+    b. .439
+    c. .363 < p < .516
+    d. No evidence it is better than chance.
+
+```{r}
+n <- 280
+phat <- 123/n
+phat
+e <- qnorm(.995) * sqrt(phat * (1-phat) / n)
+phat - e
+phat + e
+```
+
+
+31. a. 1844
+    b. 664
+    c. Doesn't affect the required sizes at all.
+
+```{r}
+qnorm(.995)^2 * .25 / .03^2
+qnorm(.995)^2 * .1 * .9 / .03^2
+```
+
+33. a. 385
+    b. 369
+    c. No
+
+```{r}
+qnorm(.975)^2 * .25 / (.05)^2
+qnorm(.975)^2 * .4 * .6 / (.05)^2
+```
+
+35. a. 1537
+    b. 1449
+
+```{r}
+qnorm(.975)^2 * .25 / .025^2
+qnorm(.975)^2 * .38 * (1-.38) / .025^2
+```
+
+###7.2 Estimating a Population Mean
+
+1. a. 13.046 < p < 22.15 ROUND BETTER
+   b. 17.598 and ME 4.552
+   c. Because the sample size is > 30
+   
+```{r}
+22.15 - 17.598
+17.598 - 13.046
+```
+   
+3. If we followed this same procedure multiple times, we would get confidence intervals that contained the true population mean 95% of the time.
+
+5. Neither distribution applies.  (READ FROM BOOK)
+7. Neither or normal z distribution, 2.576
+
+```{r}
+qnorm(.995) * 3342/ sqrt(61)
+qnorm(.995)
+```
+
+9. (29.4, 31.4),  No 
+
+```{r}
+me <- qnorm(.975) * 7.1 / sqrt(205) # WAIT, 
+me
+30.4 - me
+30.4 + me
+```
+
+11. $98.08 < \mu < 98.32$  Suggests it's false.
+
+```{r}
+me <- qt(.975, df=105) * .62 / sqrt(106)
+98.2 - me
+98.2 + me
+```
+
+13. 71.4 < mu < 126.4.  No significant evidence to reject the null hypothesis that zopiclone is ineffective. 
+
+```{r}
+xbar <- 98.9
+sem <- 42.3 / sqrt(16)
+xbar + qt(.01, df=15) * sem
+xbar + qt(.99, df=15) * sem
+```
+
+29. 94 professors.  Practical.
+
+```{r}
+(qnorm(.995) * 15 / 4)^2
+```
+
+31. 38,415, impractical.
+
+```{r}
+(qnorm(.975) * 1 / .01)^2
+```
+
+
+### 7.3 Estimating a Population Standard Deviation or Variance
+
+1. $95.0 < \sigma < 182.5$
+   We are 95% confident that the value of the population standard deviation is between 95.0 and 182.5.
+
+3. No normally distributed.
+   Cannot be treated as normally distributed.
+   Using bootstrapping, but not through parametric means.
+   
+5. $.19 < \sigma < .33$
+
+```{r}
+chil <- qchisq(.025, df=24)
+chir <- qchisq(.975, df=24)
+chil
+chir
+s <- .24
+l <- sqrt(24 * .24^2 / chir)
+r <- sqrt(24 * .24^2 / chil)
+l
+r
+```
+
+7. $df=146, \chi^2_L=105.7, \chi^2_R=193.8, 56.8 < \sigma < 76.8$
+
+```{r}
+df <- 147 - 1
+chil <- qchisq(.005, df=df)
+chir <- qchisq(.995, df=df)
+chil
+chir
+sqrt(df * 65.4^2 / chir)
+sqrt(df * 65.4^2 / chil)
+
+```
+
+9. $.55 < \sigma < .72$
+
+```{r}
+df <- 106 - 1
+chil <- qchisq(.025, df=df)
+chir <- qchisq(.975, df=df)
+l <- sqrt(df * .62^2 / chir)
+r <- sqrt(df * .62^2 / chil)
+l
+r
+```
+
+11. $29.6 < \sigma < 71.6$
+    No.
+
+```{r}
+df <- 16 - 1
+s <- 42.3
+sqrt(df * s^2 / qchisq(.99, df=df))
+sqrt(df * s^2 / qchisq(.01, df=df))
+
+```
+
+13. $1.6 < \sigma < 3.8$
+
+```{r}
+dates <- c(7,8,2,10,6,5,7,8,8,9,5,9)
+sd(dates)
+df <- length(dates) - 1
+df
+sqrt(df * sd(dates)^2 / qchisq(.975, df=df))
+sqrt(df * sd(dates)^2 / qchisq(.025, df=df))
+
+```
+
+
+### 7.4 Bootstrapping
+
+1. Bootstrapping requires sampling with replacement to allow samples of the same size as your original sample to come up with different combinations.  A sample of the same size as the original, done without replacement, is by definition exactly the same sample.
+
+3. b, d, and e
+
+5. 0 < p < .5
+
+```{r}
+x <- c(0,.5,.5,0,0,.25,0,0,.25,.5)
+sort(x)
+```
+
+
+## 8. Hypothesis Testing
+
+### 8.1 Basics of Hypothesis Testing
+
+1. The rejection of the Bayer aspirin claim is the more serious matter because aspirin has more direct effects, including the prevention of heart attacks.  I'm guessing no?  SPECIFICALLY, "It would be wise to use a smaller significance level for testing the claim about the aspirin."
+
+3. a. $H_0: \mu = 174.1$
+   b. $H_1: \mu \neq 174.1$
+   c. reject $H_0$, or fail to reject $H_0$
+   d. No.
+
+5. a. $p > .5$
+   b. $H_0: p = .5$
+      $H_1: p > .5$
+
+7. a. $\mu = 69$
+   b. $H_0: \mu = 69$
+      $H_1: \mu \neq 69$
+      
+9. Subjectively, we would reject the null hypothesis, and find there IS sufficient evidence to conclude that most (more than half) of people want to erase all of their online data.
+
+11. Subjectively, we would fail to reject the null hypothesis, and find there IS NOT sufficient evidence to conclude that the actual adult male heartrate mean is different from 69 bpm.
+
+13. $$z = \frac{\hat p - p}{\sqrt{\frac{pq}{n}}}$$, 4.279
+
+```{r}
+(.59 - .5)/sqrt(.5*.5/565)
+```
+
+15. t= .66
+
+```{r}
+(69.6 - 69)/(11.3/sqrt(153))
+```
+
+17. a. right-tailed
+    b. P .159
+    c. fail to reject null hypothesis
+
+```{r}
+1 - pnorm(1)
+```
+
+19. a. two-tailed
+    b. P .0444
+    c. reject null hypothesis
+
+```{r}
+(1 - pnorm(2.01)) * 2
+```
+
+21. a. 1.645
+    b. fail to reject null hypothesis
+
+```{r}
+qnorm(.95)
+```
+
+23. a. 1.960  (SHOULD HAVE said +/-)
+    b. reject null hypothesis
+
+```{r}
+qnorm(.975)
+```
+
+25. a. Reject the null hypothesis
+    b. Evidence supports the claim that more than half of adults would erace all of their personal information online if they could.
+    OH, that's not the claim, um. OK.
+    
+27. a. Reject the null hypothesis
+    b. There is sufficent evidence to reject the claim that adult males have a mean pulse rate of 72bpm.
+
+29. Type I error: Reject that p=.1 when actually it is true that p=.1
+    Type II error: Fail to reject that p=.1 when p does not = .1.
+    
+31. Type I error: Reject that p=.87 when actually p=.87
+    Type II error: Fail to reject that p=.87 when p > .87
+
+33. .96 is the probability of rejecting a false null hypothesis if .18 is the alternate value of p.  It is the probability of rejecting the claim that 8% of Chantix users experience adominal pain if in fact 18% do.
+
+35. 
+
+

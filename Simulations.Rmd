@@ -110,3 +110,33 @@ means <- get_means(count, n)
 mean(means)
 hist(means, main=paste0("Sample means (n=",n,")"), xlim=c(0,100))
 ```
+
+## Bootstrapping
+
+See Triola, p 344.
+
+```{r}
+brown <- c(FALSE, FALSE, TRUE, FALSE)
+boots.n <- 20
+boots.p <- numeric(boots.n)
+for (i in 1:boots.n) {
+  boots.samp <- sample(brown, size=length(brown), replace=TRUE)
+  p <- sum(boots.samp) / length(boots.samp)
+  #print(boots.samp)
+  boots.p[i] <- p
+}
+#print(sort(boots.p))
+quantile(boots.p, c(.05,.50,.95))
+```
+
+```{r}
+brown <- c(FALSE, FALSE, TRUE, FALSE)
+boots.n <- 1000
+boots.p <- numeric(boots.n)
+for (i in 1:boots.n) {
+  boots.samp <- sample(brown, size=length(brown), replace=TRUE)
+  p <- sum(boots.samp) / length(boots.samp)
+  boots.p[i] <- p
+}
+quantile(boots.p, c(.05,.50,.95))
+```
