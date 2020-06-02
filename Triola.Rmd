@@ -1309,4 +1309,896 @@ qnorm(.975)
 
 35. 
 
+### 8.2 Testing a Claim about a Proportion
+
+1. a. 270 said yes
+   b. $\hat p = .53$
+
+3. Confidence level is not equivalent to the other two for proportions, because it uses the sample proportion, not the null hypothesis proportion.
+
+```{r}
+510 * .53
+```
+
+5. a. left tailed
+   b. z (4.46) OOOPS, negative
+   c. .000004115
+   d. p = .1
+   e. reject null hypothesis, confirm p < .1
+   
+7. a. two-tailed
+   b. z = -1.69
+   c. P value = .091
+   d. p = .92, fail to reject it
+   e. There is not sufficient evidence to REJECT THE CLAIM that 92% of adults own cell phones. OOPS
+
+9. Null hypothesis is p = .10 (proportion of inaccurate orders = .10)
+   Alternative hypothesis p < .10  (THEY WANTED TWO TAILED)
+   z = -.56
+   P value = .2875
+   Fail to reject null hypothesis
+   There is not sufficient evidence to claim that the proportion of inaccurate orders is < 10%
+   
+```{r}
+n <- 362
+p <- .10
+phat <- 33 / n
+phat
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+pnorm(z)
+
+```
+   
+11. NO IDEA what I'm doing or interpreting wrong.  Oh, missing hyphen in assignment statement.  Fixed it.
+    H null is p = .5 (p being those responding in favor)
+    H alt is p <> .5
+    z = 2.69
+    P value = 0.007
+    Reject null hypothesis
+    There is sufficient evidence to reject the claim that the proportion of people who answered yes on the survey is equivalent to a coin flip.
+    
+```{r}
+n <- 481 + 401
+p <- .5
+phat <- 481 / n
+phat
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+(1 - pnorm(z)) * 2
+
+```
+    
+13. H null is p = .20 proportion of users get nausea
+    H alt is p>.20 
+    z = 1.10
+    P value = .1367
+    Fail to reject null hypothesis
+    There is no sufficient evidence to claim that the nausea rate is greater than 20%.
+    
+
+```{r}
+n <- 227
+p <- .2
+phat <- 52/n
+phat
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+1 - pnorm(z)
+```
+
+15. H null is p = .15 return rate
+    H alt is p < .15
+    z = -1.307
+    P value = .09561
+    Fail to reject null hypothesis
+    There is insufficient evidence to conclude that the return rate is less than 15%.
+    
+    
+```{r}
+n <- 5000
+p <- .15
+phat <- 717 / n
+phat
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+pnorm(z)
+```
+ 
+17. H null is that p = .512 
+    H alt is that p <> .512
+    z = -.9769
+    P value = .3286
+    Fail to reject null hypothesis
+    There is insufficient evidence to reject the belief that 51.2% of newborns are boys.
+
+```{r}
+p <- .512
+n <- 860
+phat <- 426/860
+phat
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+pnorm(z) * 2
+```
+
+31. H null is that p = .791, that the pool of Mexican jurors fairly considered was as large as the eligible Mexican population.
+    H alt is that p < .791 ("biased against")
+    z = -29.09
+    P value = 0
+    Reject the null hypothesis.
+    There is sufficient evidence to conclude that the grand jury selection system is biased against choosing Mexicans.
+
+```{r}
+n <- 870
+p <- .791
+phat <- .39
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+pnorm(z)
+```
+
+33. P-value .01141
+    P-value .001953 # NOPE .0215
+    P-value .01172
+
+```{r}
+p <- 0.5
+n <- 10
+phat <- 9/10
+z <- (phat - p) / sqrt(p * (1-p) / n)
+z
+(1 - pnorm(z)) * 2
+
+(1 - pbinom(8, size=n, prob=p)) * 2
+((1 - pbinom(9, size=n, prob=p)) + dbinom(9, size=n, prob=p) / 2) * 2
+```
+
+### 8.3 Testing a Claim About a Mean
+
+1. The twelve games must be randomly chosen.
+   There must be no outliers and the population values must be normally distributed OR the sample size must be > 30.
+   The requirements are NO satisfied
+   
+   
+```{r}
+x <- c(84, 14, 583, 50, 0, 57, 207, 43, 178, 0, 2, 57)
+qqnorm(x, datax=TRUE )
+qqline(x, datax=TRUE )
+```
+
+3. Don't know the population standard deviation.
+
+5. p value .0651 OOPS, times 2
+
+```{r}
+pt(-1.625, df=12) * 2
+```
+
+7. P-value .2379
+
+```{r}
+(1 - pt(1.340, df=5)) * 2
+```
+
+9. H null is mean = 4.00Mbps
+   H alt is mean < 4.00Mbps
+   t = -.3663
+   P value = .3579
+   There is not sufficient evidence to conclude that Sprint data speeds are less than 4.00 Mbps.
+
+11. H null is mean = 0 minutes
+    H alt is mean != 0 minutes
+    t = -8.72
+    P value = 0.0000
+    There is sufficient evidence to conclude that the mean error given is not 0.
+
+13. H null is mean = 4.0
+    H alt is mean != 4.0
+    t = -1.638
+    P value = .1049
+    There is not sufficient evidence to reject the claim that the mean course evaluation score is 4.0
+    
+```{r}
+n <- 93
+xbar <- 3.91
+s <- 0.53
+tstat <- (xbar - 4.0) / (s / sqrt(n))
+tstat
+pt(tstat, df=n-1) * 2
+```
+    
+15. H null is mean change = 0
+    H alt is mean change > 0
+    t = .133
+    P value = .4472
+    There is not sufficient evidence to conclude that the chloresterol chnage is > 0.
+
+```{r}
+n <- 49
+xbar <- 0.4
+s <- 21.0
+x <- 0
+tstat <- (xbar - x) / (s / sqrt(n))
+tstat
+1 - pt(tstat, df=n-1)
+
+```
+
+17. H null is mean weight loss = 0
+    H alt is mean weight loss > 0
+    t = 3.872
+    P value = .0002003
+    There is sufficient evidence to conclude that people lost weight, but the amount seems practically insignificant for one year.
+
+```{r}
+n <- 40
+xbar <- 3.0
+s <- 4.9
+x <- 0
+tstat <- (xbar - x) / (s / sqrt(n))
+tstat
+1 - pt(tstat, df=n-1)
+```
+
+19. H null is mean = 12.0 oz.
+    H alt is mean != 12.0 oz.
+    t = 10.364
+    P value = 0.0000
+
+```{r}
+n <- 36
+xbar <- 12.19
+s <- .11
+x <- 12.0
+tstat <- (xbar - x) / (s / n^.5)
+tstat
+(1 - pt(tstat, df=n-1)) * 2
+```
+
+25. Insufficient evidence to conclude that mean is less than 75.
+
+```{r}
+body <- read.table("data/Triola/01 - Body Data.txt", sep="\t", header=TRUE)
+female <- body[body$GENDER..1.M. == 0,]
+#female
+t.test(female$PULSE, alternative="less", mu=75)
+
+```
+
+27.  Reject null hypothesis.  Conclude true mean is less than 90.  No, it doesn't mean NO women in sample have values >= 90.
+
+```{r}
+#female
+t.test(female$DIASTOLIC, alternative="less", mu=90)
+```
+
+### 8.4 Testing a Claim about a Standard Deviation or Variance
+
+1. Strict normality, and a random sample are required.  The normality requirement for a Chi Squared test is stricter.  It is not good enough to have a roughly symmetrical distribution with no outliers.  The requirement for normality cannot be gotten around by using a big enough sample size either.
+
+5. H null is sd = 10 bpm
+   H alt is sd != 10 bpm
+   Chi Sq = 195.2
+   P value = .0208
+   Reject H null
+   There is sufficient evidence to conclude that the standard deviation of men's heart rates is NOT 10 bpm.  
+   Not true (although says nothing about how far off it might be).
+   
+7. H null is sd = 2.08 F
+   H alt is sd < 2.08 F
+   Chi Sq = 9.329
+   P value = 0.0000
+   Conclusion is safe in this way at least.
+
+```{r}
+n <- 106
+sigma <- 2.08
+s <- .62
+chisq <- (n - 1) * s^2 / sigma^2
+chisq
+pchisq(chisq, df=n-1)
+qchisq(.01, df=n-1)
+```
+
+9. H null sd = 27.8
+   H alt sd != 27.8
+   Chi Sq = 8.505
+   P value = .03835
+   Reject H null
+   There is sufficient evidence to suggest that the sd for the new cans is NOT 27.8.
+
+```{r}
+n <- 20
+sigma <- 27.8
+s <- 18.6
+chisq <- (n - 1) * s^2 / sigma^2
+chisq
+pchisq(chisq, df=n-1) * 2
+```
+
+11. H null sd = .15 oz
+    H alt sd > .15 oz
+    Chi Sq = 33.396
+    P-value = .8491  NOPE, .1509
+    Fail to reject H null.
+    There is not sufficient evidence to support the claim that the standard deviation is higher than the advertised amount.
+    
+```{r}
+n <- 27
+sigma <- .15
+s <- .17
+chisq <- (n-1) * s^2 / sigma^2
+chisq
+1 - pchisq(chisq, df=n-1)
+```
+
+13. H null sd=32.2 feet
+    H alt sd>32.2 feet
+    Chi Sq = 29.176
+    P-value = .0021
+    Reject H null
+    There is sufficient evidence to conclude that the new method makes altimiters with a wider standard deviation of errors.  Appears worse.  Find a scapegoat and keep going, obviously.
+    
+    
+```{r}
+alterr <- c(-42, 78, -22, -72, -45, 15, 17, 51, -5, -53, -9, -109)
+s <- sd(alterr)
+s
+sigma <- 32.2
+n <- length(alterr)
+chisq <- (n - 1) * s^2 / sigma^2
+chisq
+1 - pchisq(chisq, df=n-1)
+```
+    
+## 9. Inferences from Two Samples
+
+### 9.1 Two Proportions
+
+1. Yes, the number of successes and failures is both greater than 5. The children were randomly assigned.  It's fine.
+
+3. a. Null hypothesis is that true proportions are equal
+      Alt hypothesis is that true proportion of polio is less with vaccine.
+   b. Reject null hypothesis
+
+5. Evidence shows vinyl gloves do leak more.
+
+7. $p_1$: Proportion of cars with only rear license plates
+   $p_2$: Proportion of trucks with only rear license plates  
+   $H_0: p_1 = p_2$
+   $H_1: p_1 > p_2$
+
+```{r}
+x1 <- 239
+n1 <- 2049
+x2 <- 45
+n2 <- 334
+phat1 <- x1/n1
+phat2 <- x2/n2
+phat1
+phat2
+pbar <- (x1 + x2) / (n1 + n2)
+z <- (phat1 - phat2) / sqrt((pbar*(1-pbar)/n1) + (pbar*(1-pbar)/n2))
+z
+pnorm(z)
+1 - pnorm(z)
+
+prop.test(x=c(x1, x2), n=c(n1, n2), alternative="greater", correct=FALSE)
+prop.test(x=c(x2, x1), n=c(n2, n1), alternative="less", correct=FALSE)
+
+e <- qnorm(.95) * sqrt((phat1*(1-phat1)/n1)+(phat2*(1-phat2)/n2))
+e
+(phat1 - phat2) - e
+(phat1 - phat2) + e
+```
+
+9. $H_0: p_1 = p_2$ ;
+   $H_1: p_1 > p_2$ ;
+
+```{r}
+n1 <- 198
+x1 <- 51
+n2 <- 199
+x2 <- 30
+prop.test(x=c(x1,x2), n=c(n1,n2), correct=FALSE, alternative="greater", conf.level=.99)
+phat1 <- x1/n1
+phat2 <- x2/n2
+e <- qnorm(.99) * sqrt((phat1*(1-phat1)/n1)+(phat2*(1-phat2)/n2))
+e
+(phat1 - phat2) - e
+(phat1 - phat2) + e
+
+```
+
+11. $H_0: p_1 = p_2$;
+    $H_1: p_1 > p_2$;
+    z = 6.440
+    p-value = .0000
+    reject $H_0$
+    There is sufficient evidence to conclude that a greater proportion of people over 55 dream in black and white
+    b. $.117 > p_1 - p_2 > .240$
+    c. No, but it doens't disprove it either.
+    
+
+```{r}
+prop.test(x=c(68, 13), n=c(306, 298), correct=FALSE, alternative="greater")
+phat1 <- 68/306
+phat2 <- 13/298
+pbar <- (68 + 13) / (306 + 298)
+z <- (phat1 - phat2) / sqrt((pbar*(1-pbar)/306)+(pbar*(1-pbar)/298))
+z
+1 - pnorm(z)
+e <- qnorm(.99)*sqrt((phat1*(1-phat1)/306)+(phat2*(1-phat2)/298))
+phat1 - phat2 - e
+phat1 - phat2 + e
+```
+
+13. a. H null is that $p_1 = p_2$
+       H alt is that $p_1 > p_2$
+       z = 6.106
+       p value = .0000
+       reject H null
+       There is sufficient evidence to conclude that seat belts reduce fatalities.
+    b. .00495 < p1 - p2 < .01290
+    
+
+```{r}
+n1 <- 2823
+x1 <- 31
+n2 <- 7765
+x2 <- 16
+(phat1 <- x1/n1)
+(phat2 <- x2/n2)
+(pbar <- (x1 + x2) / (n1 + n2))
+(z <- (phat1 - phat2) / sqrt(pbar*(1-pbar)/n1 + pbar*(1-pbar)/n2))
+1 - pnorm(z)
+e <- qnorm(.95) * sqrt(phat1 * (1-phat1) / n1 + phat2 * (1-phat2) / n2)
+phat1 - phat2 - e
+phat1 - phat2 + e
+prop.test(x = c(31, 16), n = c(n1, n2), correct=FALSE, alternative="greater", conf.level = .95)
+prop.test(x = c(31, 16), n = c(n1, n2), correct=FALSE, alternative="two.sided", conf.level = .90)
+```
+
+15. 
+
+```{r}
+
+```
+
+### 9.2 Two Means: Independent Samples
+
+1. a. Not independent
+   b. Not independent
+   c. Independent
+   
+3. a. Yes, same conclusion
+   b. Yes, same conclusion
+   c. 98%
+   
+5. $H_0: \mu_1 = \mu_2$
+   $H_1: \mu_1 < \mu_2$
+   a. reject $H_0$, there is evidence to support diet coke cans weighing less.
+   b. 
+
+```{r}
+n1 <- 36
+n2 <- 36
+xbar1 <- .78479
+xbar2 <- .81682
+s1 <- .00439
+s2 <- .00751
+(tstat <- (xbar1 - xbar2) / sqrt(s1^2/n1 + s2^2/n2))
+pt(tstat, df=35)
+
+e <- qt(.95, df=35) * sqrt(s1^2/n1 + s2^2/n2)
+xbar1 - xbar2 - e
+xbar1 - xbar2 + e
+```
+
+7. a. $H_0: \mu_\text{red} = \mu_\text{blue}$
+      $H_1: \mu_\text{red} < \mu_\text{blue}$
+      t = -2.9790
+      p value = .0027
+   b. Conf interval (-1.055, -.105)
+
+```{r}
+n1 <- 35
+n2 <- 36
+xbar1 <- 3.39
+xbar2 <- 3.97
+s1 <- .97
+s2 <- .63
+ssamp <- sqrt(s1^2/n1 + s2^2/n2)
+(tstat <- (xbar1 - xbar2) / ssamp)
+pt(tstat, df=n1 - 1)
+
+e <- qt(.99, df=n1-1) * ssamp
+xbar1 - xbar2 - e
+xbar1 - xbar2 + e
+
+```
+
+
+21. p-value = .448
+    Fail to reject H_0
+    There is not sufficient evidence to conclude that men talk less than women.
+
+```{r}
+words <- read.table("data/Triola/24 - Word Counts.txt", header=TRUE, sep="\t")
+t.test(words$M2, words$F2, alternative = "less", conf.level=.95)
+
+```
+
+23. $H_0: \mu_g = \mu_b$;
+    $H_1: \mu_g < \mu_b$;
+    t = -3.4504
+    p-value = .0003098
+    reject $H_0$
+    There is sufficient evidence to conclude girls have lower birth weights than boys.
+
+```{r}
+births <- read.table("data/Triola/04 - Births.txt", header=TRUE, sep="\t")
+colnames(births)
+#t.test(BIRTH.WEIGHT ~ GENDER..1.M., data=births)
+weights.girls = births[births$GENDER..1.M. == 0,]$BIRTH.WEIGHT
+weights.boys = births[births$GENDER..1.M. == 1,]$BIRTH.WEIGHT
+t.test(weights.girls, weights.boys, alternative = "less")
+```
+
+### 9.3 Two Dependent Samples (Matched Pairs)
+
+1. a. Yes
+   b. They are robust, which means the distribution of sample differences does NOT need to be very close to a normal distribution.
+   c. Yes
+   d. No, those are not matched pairs
+   e. No, they require we use n=10.
+   
+3. Results are not affected.
+
+5.
+
+```{r}
+oscar <- data.frame(f=c(28,28,31,29,35,26,26,41,30,34),
+                    m=c(62,37,36,38,29,34,51,39,37,42))
+t.test(paired=TRUE, x=oscar$f, y=oscar$m, conf.level=.95,                       alternative="less")
+t.test(paired=TRUE, x=oscar$f, y=oscar$m, conf.level=.90,
+       alternative="two.sided")$conf.int
+```
+
+7. $H_0: \mu_d = 0$
+   $H_1: \mu_d \neq 0$
+   t = -7.499
+   p-value = .0001 NOPE, two tailed .0003
+   reject $H_0$
+   There is sufficient evidence to conclude there is a body temperature difference between 8am and noon.
+   95% confidence interval -1.97F < \mu_d < -1.00F
+
+```{r}
+temps <- data.frame(morn=c(96.6, 97.0, 97.0, 97.8, 97.0, 97.4, 96.6),
+                    noon=c(99.0, 98.4, 98.0, 98.6, 98.5, 98.9, 98.4))
+temps$diff <- temps$morn - temps$noon
+ssamp <- sd(temps$diff) / sqrt(length(temps$diff))
+(tstat <- mean(temps$diff) / ssamp)
+pt(tstat, df=length(temps$diff)-1) * 2
+e <- qt(.975, df=length(temps$diff)-1) * ssamp
+mean(temps$diff) - e
+mean(temps$diff) + e
+
+```
+
+9. $H_0: \mu_d = 0$
+   $H_0: \mu_d \neq 0$
+   t = -1.379
+   p-value = .2013
+   Fail to reject $H_0$
+   There is not sufficient evidence to conclude that there is a height difference between mothers and daughters.
+
+```{r}
+h <- data.frame(m=c(68,60,61,63.5,69,64,69,64,63.5,66),
+                d=c(68.5,60,63.5,67.5,68,65.5,69,68,64.5,63))
+h$diff <- h$m - h$d
+ssamp <- sd(h$diff) / sqrt(length(h$diff))
+(tstat <- mean(h$diff) / ssamp)
+pt(tstat, df=length(h$diff)-1) * 2
+t.test(x=h$m, y=h$d, conf.level=.95, alternative="two.sided",
+       paired=TRUE)
+```
+
+## 10. Correlation and Regression
+
+### 10.1 Correlation
+
+1. a. r represents the correlation in the sample.
+      $\rho$ represents the correlation in the population of statistics students.
+   b. 0
+   c. No
+
+3. No.  It doesn't rule it out, but there could be lurking variables.  NOT SURE IF THIS WAS RIGHT OR NOT.
+
+5. Yes, yes, yes
+
+7. r critical
+value about .254.  No there is insufficient evidence to conclude there is a linear correlation
+
+9. .8162
+   The high, arching shape showing near perfect alignment to a curve, rather than a line.
+
+```{r}
+df <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+                 y=c(9.14,8.14,8.74,8.77,9.26,8.10,6.13,3.10,9.13,7.26,4.74))
+plot(df)
+res <- lm(df)
+summary(res)
+sqrt(.6662)
+sqrt(.6292)
+cor(df)
+```
+
+11. a. Maybe, but only if the outlier is real.
+    b. .9057, yes
+    c. No, definately not and
+       0, no
+    d. Wow, check for outliers before determining correlation!
+
+```{r}
+x <- c(1,1,1,2,2,2,3,3,3)
+y <- c(1,2,3,1,2,3,1,2,3)
+plot(x,y)
+cor(x,y)
+xplus <- c(x,10)
+yplus <- c(y,10)
+plot(xplus,yplus)
+cor(xplus,yplus)
+df <- data.frame(x=xplus, y=yplus)
+summary(lm(df))
+sqrt(.8202)
+
+sum((xplus - mean(xplus)) * (yplus - mean(yplus))) / ((length(xplus) - 1)  * sd(xplus) * sd(yplus))
+cor(xplus,yplus)
+```
+
+13. r = .7991
+    crit r is .811 by table
+    p-value = .05648 by R lm()
+    No, there is not sufficient evidence to conclude there is a correlation between internet users and nobel laureates.
+
+```{r}
+il <- data.frame(i=c(79.5,79.6,56.8,67.6,77.9,38.3),
+                 n=c(5.5,9.0,3.3,1.7,10.8,0.1))
+plot(il)
+cor(il)
+summary(lm(il))
+```
+
+17. r = .591 (r crit .878)
+    p-value = .294
+    No, insufficient evidence.
+
+```{r}
+shoe=c(29.7, 29.7, 31.4, 31.8, 27.6)
+h=c(175.3, 177.8, 185.4, 175.3, 172.7)
+df <- data.frame(shoe=shoe, h=h)
+plot(df)
+cor(df)
+summary(lm(df))
+
+```
+
+19. r = -.959, p-value=.0099. Yes.  No.
+
+```{r}
+lem <- c(230, 265, 358, 480, 530)
+fat <- c(15.9, 15.7, 15.4, 15.3, 14.9)
+cor(lem, fat)
+summary(lm(fat~lem, data=data.frame(lem=lem, fat=fat)))
+sqrt(.9196)
+```
+
+
+35.
+
+```{r}
+x <- c(2,3,20,50,95)
+y <- c(.3,.5,1.3,1.7,2.0)
+cor(x,y)
+cor(y,x)
+cor(y,x^2)
+cor(y,log(x))
+cor(y,log10(x))
+cor(y,sqrt(x))
+cor(y,1/x)
+plot(x,y)
+plot(y,x)
+plot(y,x^2)
+plot(y,log(x))
+plot(y,log10(x))
+plot(y,sqrt(x))
+plot(y,1/x)
+
+```
+
+### 10.2 Regression
+
+1. a. $\hat y = -368 + 130x$
+   b. It represents the estimate of the y value based solely on the x value.
+   
+3. a. A residual is the difference between the actual value of y and the value of $\hat y$ predicted from the value of x and the regression equation.
+   b. It best fits in the sense that it minimizes the SUM OF square of the residuals.
+   
+5. 5.9, because the p-value says it's not significant
+
+```{r}
+8.18 - .345 * 8
+```
+
+7. 92
+
+```{r}
+-106 + 1.1*180
+```
+
+9. $\hat y = -3.001 + .5 x$
+   There is a non-linear curve not reflected in the equation.
+
+```{r}
+x <- c(10,8,13,9,11,14,6,4,12,7,5)
+y <- c(9.14,8.14,8.74,8.77,9.26,8.10,6.13,3.10,9.13,7.26,4.74)
+df <- data.frame(x=x, y=y)
+plot(df)
+res <- lm(y~x, data=df)
+summary(res)
+abline(res)
+```
+
+11. a. $\hat y = .264 + .906x$
+    b. $\hat y = 2 + 0x$
+    c. Part a has a slope.  Part b, nope.  (BECAUSE ONE OUTLIER CAN DRAMATICALLY AFFECT THE REGRESSION EQUATION).
+
+```{r}
+x <- c(1,1,1,2,2,2,3,3,3)
+y <- c(1,2,3,1,2,3,1,2,3)
+plot(x,y)
+cor(x,y)
+res <- lm(y~x)
+res
+abline(res)
+
+xplus <- c(x,10)
+yplus <- c(y,10)
+plot(xplus,yplus)
+cor(xplus,yplus)
+res <- lm(yplus~xplus)
+res
+abline(res)
+```
+
+13. $\hat y = -8.44 + .203 x$
+    5.067
+    Not very good.
+
+
+```{r}
+il <- data.frame(n=c(5.5,9.0,3.3,1.7,10.8,0.1),
+                 i=c(79.5,79.6,56.8,67.6,77.9,38.3))
+plot(il)
+cor(il)
+summary(lm(il))
+mean(il$n)
+
+```
+
+15. $\hat y = -.011 + 1.011 x $
+    $3.02
+    Not exactly, because 2 cents is an odd number.  It is likely to be close, however.
+    
+
+```{r}
+pizza <- c(.15, .35, 1.0, 1.25, 1.75, 2.0, 2.25, 2.30, 2.75)
+fare <- c(.15, .35,1.0, 1.35, 1.50, 2.0, 2.25, 2.50, 2.75)
+plot(pizza, fare)
+res <- lm(fare ~ pizza)
+abline(res)
+summary(res)
+res$coefficients['(Intercept)'] + res$coefficients['pizza'] * 3
+```
+
+17. $\hat y = 125.407 + 1.727 x$
+    177.3
+    NO
+
+```{r}
+shoe=c(29.7, 29.7, 31.4, 31.8, 27.6)
+h=c(175.3, 177.8, 185.4, 175.3, 172.7)
+plot(shoe, h)
+res <- lm(h ~ shoe)
+summary(res)
+mean(h)
+
+```
+
+19. $\hat y = 16.491 - .00282 x$
+    15.1
+    No?  
+     
+
+```{r}
+lem <- c(230, 265, 358, 480, 530)
+fat <- c(15.9, 15.7, 15.4, 15.3, 14.9)
+res <- lm(fat ~ lem)
+summary(res)
+16.4909102 - 0.0028205 * 500
+```
+
+21. $\hat y = 51.619 - .165 x$
+    42.709 years (45 it said, OOHH, it's the mean because regression not predictive.)
+    No.
+
+```{r}
+f <- c(28,30,29,61,32,33,45,29,62,22,44,54)
+m <- c(43,37,38,45,50,48,60,50,39,55,44,33)
+plot(f, m)
+cor(f, m)
+res <- lm(m ~ f)
+abline(res)
+summary(res)
+res$coefficients["(Intercept)"] + res$coefficients["f"]*54
+51.619 - .165 * 54
+mean(m)
+```
+
+23. $\hat y = -156.879 + 40.182 x$
+    -76.515,
+    nope
+
+```{r}
+width <- c(7.2, 7.4, 9.8, 9.4, 8.8, 8.4)
+weight <- c(116, 154, 245, 202, 200, 191)
+plot(width, weight)
+cor(width, weight)
+res <- lm(weight ~ width)
+abline(res)
+summary(res)
+res$coefficients["(Intercept)"] + res$coefficients["width"] * 2
+```
+
+25. $14.51
+    15%
+
+```{r}
+bill <- c(33.46, 50.68, 87.92, 98.84, 63.60, 107.34)
+tip <- c(5.50, 5.00, 8.08, 17.00, 12.00, 16.00)
+plot(bill, tip)
+res <- lm(tip ~ bill)
+summary(res)
+
+(b1 <- cor(bill, tip) * sd(tip) / sd(bill))
+(b0 <- mean(tip) - b1 * mean(bill))
+
+b0 + b1 * 100
+```
+
+### 10.3 Rank Correlation
+
+1. Not necessarily.  The methods of section 10-2 depend on normally distributed data.  NOPE, the difference is that rank correlation can sometimes detect NON-LINEAR correlations.
+
+3. 
+
+$r$ is the linear correlation of a sample.
+   
+$r_s$ is the Spearman's rank correlation of a sample.
+
+$\rho$ is the linear correlation of a population.
+
+$\rho_s$ is the Spearman's rank correlation of a population
+
+No, the s subscript represents the last name of Spearman, the person who invented this technique.
+
+5. 1
+
+6. -1
+
+
+   
+   
 
