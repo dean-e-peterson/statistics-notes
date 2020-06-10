@@ -2198,7 +2198,196 @@ No, the s subscript represents the last name of Spearman, the person who invente
 
 6. -1
 
+7. 
 
+```{r}
+choc <- c(11.6, 2.5, 8.8, 3.7, 1.8, 4.5, 9.4, 3.6, 2.0, 3.6, 6.4)
+nobel <- c(12.7, 1.9, 12.7, 3.3, 1.5, 11.4, 25.5, 3.1, 1.9, 1.7, 31.9)
+cor.test(choc, nobel, method="spearman")
+```
+
+9. $r_s=1$
+   Reject the null hypothesis of no correlation
    
+
+```{r}
+pizza <- c(.15, .35, 1.0, 1.25, 1.75, 2.0, 2.25, 2.30, 2.75)
+fare <- c(.15, .35,1.0, 1.35, 1.50, 2.0, 2.25, 2.50, 2.75)
+cor.test(pizza, fare, method="spearman")
+```
+
+13. $r_s = .9023$  Reject null.  There is evidence of a correlation.
+
+```{r}
+nobel <- read.table("data/Triola/16 - Nobel Laureates and Chocolate.txt", header=TRUE, sep="\t")
+cor.test(x=nobel$CHOCOLATE, y=nobel$NOBEL, method="spearman")
+```
+
+## 11. Chi-Square and Analysis of Variance
+
+### 11.1 Goodness-of-Fit
+
+1. a. Observed $O$,
+      Expected $E$
+   b. $O_2 = 62$,
+      $E_2 = 55.792$
+   c. .691
    
+```{r}
+arr <- c(76,62,29,33,19,27,28,21,22)
+(ex <- sum(arr) * .176)
+(arr[2] - ex)^2 / ex
+```
+   
+3. Reject null hypothesis that it fits.
+
+5. Fail to reject
+
+7. $\chi ^2 = 5.86$
+   crit 11.071
+   fail to reject null hypothesis
+```{r}
+loaded <- c(27,31,42,40,28,32)
+(ex <- sum(loaded) / length(loaded))
+sum((loaded - ex)^2 / ex)
+```
+
+9. $\chi^2 = 11.161$
+   critical value 7.815
+   reject null hypothesis
+   There is sufficient evidence to conclude that the results DO contradict Mendel's theory.
+
+```{r}
+ob <- c(307,77,98,18)
+ratio <- c(9,3,3,1)
+prob <- ratio / sum(ratio)
+(ex <- prob * sum(ob))
+sum((ob - ex)^2 / ex)
+```
+
+11. $\Chi^2 = 29.814
+    crit = 16.812
+    Reject null hypothesis.  there is sufficient evidence to conclude that the days of the week do not have the same number of police calls.  More calls toward the weekend.
+
+```{r}
+ob <- c(114,152,160,164,179,196,130)
+ex <- sum(ob) / length(ob)
+sum((ob - ex)^2 / ex)
+```
+
+### 11.2 Contingency Tables
+
+1. a. 4.173
+   b. not met for $\chi^2$ approximation 
+
+```{r}
+43 * (16 + 50 + 3) / (436 + 166 + 40 + 16 + 50 + 3)
+```
+
+3. $\chi^2 = 64.517$
+   p-value = .000
+   Reject null hypothesis.  Evidence that proportions are not the same. EVIDENCE THAT THE TWO AXES ARE NOT INDEPENDENT.
+   
+5. $\chi^2 = 25.571
+   crit (for 1 df) 3.841
+   Reject H null, There is evidence that a polygraph result is NOT independent of whether someone lied.
+   
+
+```{r}
+ob <- matrix(c(15,32,42,9), nrow=2)
+ob
+ex <- matrix(c(
+    sum(ob[1,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[1,]) * sum(ob[,2]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,2]) / sum(ob)
+), nrow=2)
+ex
+sum((ob - ex)^2 / ex)
+```
+
+7. $\chi^2 = 576.224$
+   crit value = 3.841
+   Reject null hypothesis.  The risky behaviors are not independent.
+
+```{r}
+ob <- matrix(c(731, 156, 3054, 4564), nrow=2)
+ob
+ex <- matrix(c(
+    sum(ob[1,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[1,]) * sum(ob[,2]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,2]) / sum(ob)
+), nrow=2)
+ex
+sum((ob - ex)^2 / ex)
+```
+
+9. $\chi^2 = 12.162$
+   crit value = 3.841
+   Reject null hypothesis.  They are not independent.  There is evidence for a denomination effect.
+
+```{r}
+ob <- matrix(c(27, 12, 16,34), nrow=2)
+ob
+ex <- matrix(c(
+    sum(ob[1,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[1,]) * sum(ob[,2]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,2]) / sum(ob)
+), nrow=2)
+ex
+sum((ob - ex)^2 / ex)
+```
+
+11. $\chi^2 = .0637$
+    crit value = 3.841
+    Fail to reject null hypothesis, no evidence of call success being dependent on gender.
+
+```{r}
+ob <- matrix(c(161, 68, 376, 152), nrow=2)
+ob
+ex <- matrix(c(
+    sum(ob[1,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,1]) / sum(ob),
+    sum(ob[1,]) * sum(ob[,2]) / sum(ob),
+    sum(ob[2,]) * sum(ob[,2]) / sum(ob)
+), nrow=2)
+ex
+sum((ob - ex)^2 / ex)
+```
+
+### 11.3 One-Way Analysis of Variance
+
+1. a. We use a one-way ANOVA because the data are only divided up by one category, the flight number.
+
+   b. The technique is called analysis of variance because it analyzes the ratio of the variance between the samples to the variance within the samples.
+   
+3. F is 1.334, Uses F distribution with two different degrees of freedom.
+
+5. We cannot reject the null hypothesis that the three lead groups have the same mean IQ.  This provides no evidence that lead affects verbal IQ scores.
+
+7. F=5.596, p-value = .00455, there is significant evidence that the mean drive through time are NOT the same.
+
+9. F=7.93, p-value = .000539, there is significant evidence that the mean pulse rates are NOT the same.
+
+13.  OHHH, LOOKS LIKE I DID DO IT RIGHT, BUT EQUAL VARIANCES REQUIREMENT NOT MET.
+
+```{r}
+df <- data.frame(arr=c(-2, -1, -2, 2, -2, 0, -2, -3, 
+                       19, -4, -5, -1, -4, 73, 0, 1,
+                       18, 60, 142, -1, -11, -1, 47, 13),
+                 flight=c(rep("f1", 8), rep("f19", 8), rep("f21", 8)))
+res <- aov(df$arr ~ df$flight)
+summary(res)
+TukeyHSD(res)
+boxplot(df$arr ~ df$flight)
+```
+
+15.
+
+```{r}
+chips <- read.table("data/Triola/28 - Chocolate Chip Cookies.txt", header=TRUE, sep="\t")
+chips
+```
 
